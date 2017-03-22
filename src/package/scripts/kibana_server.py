@@ -21,11 +21,36 @@ limitations under the License.
 from resource_management import *
 from kibana import kibana
 import sys
+
+def exclude_package_flag():
+    ambari_version = ""
+    version_file = "/var/lib/ambari-agent/data/version"
+    try:
+        with open(version_file, 'r') as file:
+            ambari_version = str(file.read())
+        if ambari_version == "":
+            raise Exception("%s is empty" % (version_file))
+        Logger.info("ambari_version: %s" % (ambari_version))
+        if compare_versions(ambari_version, "2.4.0.1") == -1:
+            Logger.info("with exclude_packages")
+            return True
+        else:
+            Logger.info("without exclude_packages")
+            return False
+    except Exception, e:
+        raise Exception("Could not determine ambari version by reading %s. Ambari version is %s." %
+                     (version_file, ambari_version))
+
 class KibanaMaster(Script):
   def install(self, env):
     import params
     env.set_params(params)
-    self.install_packages(env)
+    exclude_packages = ['elastic*', 'logstash*', 'python-requests']
+    if exclude_package_flag() == True:
+      self.install_packages(env, exclude_packages)
+    else:
+      self.install_packages(env)
+
     reload(sys)                         
     sys.setdefaultencoding('utf-8')  
     File(format("{kibana_home}/optimize/bundles/src/ui/public/images/kibana.svg"),
