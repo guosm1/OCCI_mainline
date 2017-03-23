@@ -1,4 +1,4 @@
-function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFactory) {
+function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFactory, CONFIG) {
 
     var editVm  = this;
     $scope.editMessages = "";
@@ -8,7 +8,8 @@ function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFact
 
     editVm.getDoc = function() {
         var defered = $q.defer();
-        var url = 'http://36.110.131.101:9200/occikb/' + $routeParams.type + '/' + $routeParams.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
+                                + CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
                 method: 'GET'
@@ -56,7 +57,8 @@ function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFact
 
     editVm.update = function() {
 
-        var url = 'http://36.110.131.101:9200/occikb/'  + $scope.editContent.type + '/' + $scope.editContent.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
+                                + CONFIG.esIndex + "/" + $scope.editContent.type + '/' + $scope.editContent.id;
         var defered = $q.defer();
         var editBody = '{' +
                             '"id": "' + $scope.editContent.id + '",' +

@@ -1,4 +1,4 @@
-var app = angular.module('ockbApp', ['datatables', 'ngRoute', 'pascalprecht.translate']);
+var app = angular.module('ockbApp', ['datatables', 'ngRoute', 'pascalprecht.translate', 'ockbConfigApp']);
 app.config(function($routeProvider) {
      $routeProvider
          .when(

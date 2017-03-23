@@ -1,10 +1,11 @@
-function detailcontroller($scope, $http, $routeParams, $q) {
+function detailcontroller($scope, $http, $routeParams, $q, CONFIG) {
 
 
     $scope.list = function() {
 
         var defered = $q.defer();
-        var url = 'http://36.110.131.101:9200/occikb/' + $routeParams.type + '/' + $routeParams.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
+                                + CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
                 method: 'GET'

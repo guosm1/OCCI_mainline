@@ -1,4 +1,4 @@
-function searchcontroller($scope, $http, $routeParams, $q, $translate, DTOptionsBuilder, DTColumnBuilder) {
+function searchcontroller($scope, $http, $routeParams, $q, $translate, DTOptionsBuilder, DTColumnBuilder, CONFIG) {
 
     var vm = this;
     vm.searchContent = $routeParams.searchContent;
@@ -84,6 +84,8 @@ function searchcontroller($scope, $http, $routeParams, $q, $translate, DTOptions
 
     $scope.search = function() {
         var defered = $q.defer();
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
+                                + CONFIG.esIndex + "/_search";
         var query = '{' +
                         //'"track_scores": true,' + { "告警描述" : "desc" }, { "处理步骤" : "desc" },
 //                        '"sort": [{ "_score" : "asc" }],' +
@@ -101,8 +103,7 @@ function searchcontroller($scope, $http, $routeParams, $q, $translate, DTOptions
                       '}';
 
         $http({
-//                url: 'http://103.235.243.213:9200/occikb/_search',
-                url: 'http://36.110.131.101:9200/occikb/_search',
+                url: url,
                 method: 'POST',
                 data: query
              }).then(function (result) {
