@@ -1,4 +1,4 @@
-angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, docTypesFactory) {
+angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, docTypesFactory, CONFIG) {
 
     var vm = this;
     vm.header_titles = [];
@@ -8,7 +8,7 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     vm.get_type = function() {
 
         var defered = $q.defer();
-        var url = 'http://36.110.131.101:9200/occikb/';
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" + CONFIG.esIndex;
         $http({
                 url: url,
                 method: 'GET'
@@ -23,6 +23,8 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
 
     vm.get_ids = function(type) {
         var defered = $q.defer();
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":"
+                            + CONFIG.esPort + "/" + CONFIG.esIndex +"/_search";
         var query = '{' +
                         '"size": 10000,' +
                         '"sort" : [' +
@@ -33,7 +35,7 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                         '}' +
                      '}';
         $http({
-                url: 'http://36.110.131.101:9200/occikb/_search',
+                url: url, //'http://36.110.131.101:9200/occikb/_search',
                 method: 'POST',
                 data: query
              }).then(function (result) {

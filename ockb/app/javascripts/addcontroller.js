@@ -1,4 +1,4 @@
-function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFactory) {
+function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFactory, CONFIG) {
 
     var addVm  = this;
     $scope.addMessages = "";
@@ -10,7 +10,9 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
     addVm.getDoc = function() {
 
         var defered = $q.defer();
-        var url = 'http://36.110.131.101:9200/occikb/' + $scope.addContent.type + '/' + $scope.addContent.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
+                                + CONFIG.esIndex + "/" + $scope.addContent.type + '/' + $scope.addContent.id;
+
         $http({
                 url: url,
                 method: 'GET'
@@ -27,7 +29,8 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
     addVm.create = function() {
 
         var defered = $q.defer();
-        var url = 'http://36.110.131.101:9200/occikb/'  + $scope.addContent.type + '/' + $scope.addContent.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
+                                + CONFIG.esIndex + "/" + $scope.addContent.type + '/' + $scope.addContent.id;
         var addBody = '{' +
                             '"id": "' + $scope.addContent.id + '",' +
                             '"type": "' + $scope.addContent.type + '",' +
