@@ -73,8 +73,9 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
                                $scope.addMessages = "create successfully!";
                            }, function(data) {
                                $scope.addMessages = "can not create, please check the input!";
+                           }).then(function(){
+                                 $location.path('detail/' + $scope.addContent.type + '/' + $scope.addContent.id);
                            });
-
                  }
              }, function(data) {
                  $scope.addContentFound = {error: 'can not find'};
