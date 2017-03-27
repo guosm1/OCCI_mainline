@@ -74,7 +74,9 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
                            }, function(data) {
                                $scope.addMessages = "can not create, please check the input!";
                            }).then(function(){
-                                 $location.path('detail/' + $scope.addContent.type + '/' + $scope.addContent.id);
+                                  $location.path('detail/' + $scope.addContent.type + '/' + $scope.addContent.id);
+                                  // refresh the whole page after the delete, but it need to enhance partial refresh
+                                  window.location.reload();
                            });
                  }
              }, function(data) {
