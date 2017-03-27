@@ -9,9 +9,11 @@
         <script src="bower_components/angular-route/angular-route.js"></script>
         <script src="bower_components/angular-translate/angular-translate.js"></script>
         <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+        <script src="bower_components/angular-tree-control/angular-tree-control.js"></script>
 
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control.css">
 
         <link rel="stylesheet" href="styles/highlight.css">
         <link rel="stylesheet" href="styles/index.css">
@@ -44,35 +46,22 @@
         <div ng-controller="navigatorcontroller as navctrl" class="container-fluid">
             <div class="row">
                 <div class="col-sm-3">
-                    <div style="overflow:auto; height: 780px";>
-                        <ul ng-repeat="ty in navctrl.header_titles" class="menu">
-                            <li>
-                                <a ng-click="navctrl.expandFunc(ty.type)">{{ ty.type }}</a>
-                                <!--<ul ng-repeat="(key, value) in ty.type_ids" class="pages" ng-show="navctrl.expandType === ty.type && navctrl.expand">-->
-                                <!--<ul ng-repeat="(key, value) in ty.type_ids" class="pages {{ ty.type }}">-->
-                                <ul ng-repeat="(key, value) in ty.type_ids" class="hidden {{ ty.type }}">
-                                    <li>
-                                        <a href="#!/detail/{{ ty.type }}/{{ value._id }}">{{ value._source.description }}</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+                    <treecontrol class="tree-light"
+                                 tree-model="dataForTheTree"
+                                 on-selection="showSelected(node)"
+                                 selected-node="node">
+                        {{node.description}}
+                    </treecontrol>
                 </div>
                 <div class="col-sm-9">
                     <form novalidate class="search-form form-inline">
                         <div class="text-center">
                             <label class="sr-only" for="home-search">Search the knowledge base</label>
                             <input ng-model="searchContent" type="search" class="form-control input-lg" name="search" id="home-search" size="50" placeholder="Search the knowledge base">
-                            <!--<button ng-click="search()" type="submit" class="btn btn-primary btn-lg">Search</button>-->
                             <a href="#!/search/{{ searchContent }}" type="submit" class="btn btn-primary btn-lg">{{ 'index.search' | translate }}</a>
                         </div>
                     </form>
                     </br>
-                    <!--<div>-->
-                        <!--<a href="#!/add" type="submit" class="btn btn-default">{{ 'index.add' | translate }}</a>-->
-                    <!--</div>-->
-                    <!--</br>-->
                     <div ng-view></div>
                 </div>
             </div>

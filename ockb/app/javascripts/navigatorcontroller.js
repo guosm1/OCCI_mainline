@@ -1,9 +1,9 @@
-angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, docTypesFactory, CONFIG) {
+angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, $location, docTypesFactory, CONFIG) {
 
     var vm = this;
-    vm.header_titles = [];
-    vm.expand = false;
-    vm.expandType = "";
+
+    $scope.dataForTheTree = [];
+
 
     vm.get_type = function() {
 
@@ -47,46 +47,51 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     };
 
 
-    var promise = vm.get_type();
+    vm.initialTree = function(){
+        var promise = vm.get_type();
 
-    promise.then(function(data) {
-             vm.types = data.data.occikb.mappings;
-             var tmpTypes = [];
-             angular.forEach(vm.types, function(value, key) {
-                tmpTypes.push(key);
-
-                var get_id_promise = vm.get_ids(key);
-                get_id_promise.then(function(data) {
-                         var item = {"type": key, "type_ids": data};
-                         vm.header_titles.push(item);
-                     }, function(data) {
-                         vm.header_titles = [];
-                         console.log("Error when get the ids!");
-                     });
-             });
-             // set the doc types to the service, then other controller can use
-             docTypesFactory._setTypes(tmpTypes);
-
-         }, function(data) {
-             vm.types = {error: 'can not find'};
-         });
+        promise.then(function(data) {
+                 vm.types = data.data.occikb.mappings;
+                 var tmpTypes = [];
+                 angular.forEach(vm.types, function(value, key) {
+                    tmpTypes.push(key);
 
 
-    vm.expandFunc = function (type) {
-        var subLiElements = angular.element("." + type);
-        if (subLiElements.length != 0 ){
-            if(subLiElements[0].className == type){
-                angular.forEach(subLiElements, function(value, key) {
-                    value.className = "hidden " + type;
-                });
-            } else{
-                angular.forEach(subLiElements, function(value, key) {
-                    value.className = type;
-                });
-            }
-        }
+                    var get_id_promise = vm.get_ids(key);
+                    get_id_promise.then(function(data) {
+
+                             var item = {
+                                "id": "",
+                                "type": "",
+                                "description": key,
+                                "children": []
+                             };
+                             angular.forEach(data, function(value, key) {
+                                item.children.push(value._source);
+                             });
+                             $scope.dataForTheTree.push(item);
+
+
+                         }, function(data) {
+                             vm.header_titles = [];
+                             console.log("Error when get the ids!");
+                         });
+                 });
+                 // set the doc types to the service, then other controller can use
+                 docTypesFactory._setTypes(tmpTypes);
+
+             }, function(data) {
+                 vm.types = {error: 'can not find'};
+        });
     };
 
 
+    vm.initialTree();
+
+
+    $scope.showSelected = function(sel) {
+        $scope.selected = sel.name;
+        $location.path('detail/' + sel.type + '/' + sel.id);
+    };
 
 });
