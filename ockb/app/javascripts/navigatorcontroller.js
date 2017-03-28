@@ -3,6 +3,13 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     var vm = this;
 
     $scope.dataForTheTree = [];
+    // tree options
+    $scope.treeOptions = {
+        nodeChildren: "children",
+        dirSelectable: false,
+        allowDeselect: false
+    }
+
 
 
     vm.get_type = function() {
@@ -61,13 +68,18 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                     get_id_promise.then(function(data) {
 
                              var item = {
-                                "id": "",
-                                "type": "",
+                                "id": key,
+                                "type": key,
                                 "description": key,
                                 "children": []
                              };
                              angular.forEach(data, function(value, key) {
-                                item.children.push(value._source);
+                                var tmp = value._source;
+                                tmp["children"] = [];
+                                tmp["id"] = value._source.id;
+                                tmp["type"] = value._source.type;
+                                tmp["description"] = value._source.description;
+                                item.children.push(tmp);
                              });
                              $scope.dataForTheTree.push(item);
 
