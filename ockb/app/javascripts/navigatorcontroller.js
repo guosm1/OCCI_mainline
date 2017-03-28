@@ -106,4 +106,11 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
         $location.path('detail/' + sel.type + '/' + sel.id);
     };
 
+
+   // search section is in the main page so add the click search function in this js
+    vm.search = function() {
+        $location.path('search/'+ vm.searchContent);
+    };
+
+
 });

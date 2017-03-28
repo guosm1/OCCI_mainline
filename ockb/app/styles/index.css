@@ -26,3 +26,9 @@ a.create-button {
   float: right;
   margin: 7px 120px;
 }
+
+
+treecontrol.tree-light li .tree-selected {
+    background-color: #aaddff;
+    font-weight: bold;
+}

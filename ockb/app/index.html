@@ -61,8 +61,9 @@
                     <form novalidate class="search-form form-inline">
                         <div class="text-center">
                             <label class="sr-only" for="home-search">Search the knowledge base</label>
-                            <input ng-model="searchContent" type="search" class="form-control input-lg" name="search" id="home-search" size="50" placeholder="Search the knowledge base">
-                            <a href="#!/search/{{ searchContent }}" type="submit" class="btn btn-primary btn-lg">{{ 'index.search' | translate }}</a>
+                            <input ng-model="navctrl.searchContent" type="search" class="form-control input-lg" name="search" id="home-search" size="50" placeholder="Search the knowledge base">
+                            <!--<a href="#!/search/{{ searchContent }}" type="submit" class="btn btn-primary btn-lg">{{ 'index.search' | translate }}</a>-->
+                            <button href=href="javascript:void(0)" ng-click="navctrl.search()" type="submit" class="btn btn-primary btn-lg">{{ 'index.search' | translate }}</button>
                         </div>
                     </form>
                     </br>

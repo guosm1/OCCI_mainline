@@ -4,7 +4,7 @@ function searchcontroller($scope, $http, $routeParams, $location, $q, $translate
     vm.searchContent = $routeParams.searchContent;
     // set the searchcontroller parent's parent's searchContent,
     // this is not a good way, just here for quick fix the issue
-    $scope.$parent.$parent.searchContent = vm.searchContent;
+    $scope.navctrl.searchContent = vm.searchContent;
 
 
     vm.formatHLData = function(highLight) {
@@ -115,9 +115,8 @@ function searchcontroller($scope, $http, $routeParams, $location, $q, $translate
          return defered.promise;
     };
 
+
     var promise = $scope.search();
-
-
 
     $scope.dtOptions = DTOptionsBuilder
                         .fromFnPromise(promise)
@@ -148,14 +147,23 @@ function searchcontroller($scope, $http, $routeParams, $location, $q, $translate
         $('a', nRow).bind('click', function() {
             $scope.$apply(function() {
                 var treecontrol = angular.element("treecontrol");
+                var firstChildNode = treecontrol.find("#" + aData._source.type + '_' + aData._source.type);
+                var secondChildNode = treecontrol.find("#" + aData._source.type + '_' + aData._source.id);
 
-                $timeout(function () {
-                    treecontrol.find("#" + aData._source.type + '_' + aData._source.type).trigger('click');
-                }, 100);
+                if (secondChildNode.length == 0) {
+                    $timeout(function () {
+                        firstChildNode.trigger('click');
+                    }, 100);
 
-                $timeout(function () {
-                    treecontrol.find("#" + aData._source.type + '_' + aData._source.id).trigger('click');
-                }, 100);
+                    $timeout(function () {
+                        // find again becase first node just expanded
+                        treecontrol.find("#" + aData._source.type + '_' + aData._source.id).trigger('click');
+                    }, 100);
+                } else {
+                    $timeout(function () {
+                        secondChildNode.trigger('click');
+                    }, 100);
+                }
 
                 $location.path('detail/' + aData._source.type + '/' + aData._source.id);
             });
