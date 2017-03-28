@@ -54,6 +54,6 @@ app.factory('docTypesFactory', function() {
 });
 
 
-app.controller('appController', function($scope) {
-
+app.controller('appController', function($scope, CONFIG) {
+    $scope.internalUse = CONFIG.internalUse;
 });

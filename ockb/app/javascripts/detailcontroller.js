@@ -1,5 +1,6 @@
 function detailcontroller($scope, $http, $routeParams, $q, CONFIG) {
 
+    $scope.internalUse = CONFIG.internalUse;
 
     $scope.list = function() {
 
