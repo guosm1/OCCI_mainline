@@ -57,5 +57,3 @@ app.factory('docTypesFactory', function() {
 app.controller('appController', function($scope) {
 
 });
-
-

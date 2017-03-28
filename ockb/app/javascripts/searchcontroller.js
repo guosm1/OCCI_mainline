@@ -1,4 +1,4 @@
-function searchcontroller($scope, $http, $routeParams, $q, $translate, DTOptionsBuilder, DTColumnBuilder, CONFIG) {
+function searchcontroller($scope, $http, $routeParams, $location, $q, $translate, $timeout, DTOptionsBuilder, DTColumnBuilder, CONFIG) {
 
     var vm = this;
     vm.searchContent = $routeParams.searchContent;
@@ -134,7 +134,7 @@ function searchcontroller($scope, $http, $routeParams, $q, $translate, DTOptions
                                 "sNext": "&gt;",
                                 "sPrevious": "&lt;"
                             }
-                        });
+                        }).withOption('rowCallback', rowCallback);
 
     $scope.dtColumns = [
         DTColumnBuilder.newColumn(null).withTitle($translate('index.table.search.results')).notSortable()
@@ -142,68 +142,36 @@ function searchcontroller($scope, $http, $routeParams, $q, $translate, DTOptions
     ];
 
 
+    function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
+        $('a', nRow).unbind('click');
+        $('a', nRow).bind('click', function() {
+            $scope.$apply(function() {
+                var treecontrol = angular.element("treecontrol");
 
+                $timeout(function () {
+                    treecontrol.find("#" + aData._source.type + '_' + aData._source.type).trigger('click');
+                }, 100);
 
-   function actionsHtml(data, type, full, meta) {
+                $timeout(function () {
+                    treecontrol.find("#" + aData._source.type + '_' + aData._source.id).trigger('click');
+                }, 100);
 
-        var idLink = '<a href="#!/detail/' +
-                            data._type +
-                            '/' +
-                            data._id +
-                            '">' +
-                            data._id +
-                            '</a><br/>';
-         if (typeof(data.highlight) == 'undefined') {
-            return idLink + vm.formatSourceData(data._source);
-         } else {
-//            return idLink + angular.toJson(data.highlight);
-            return idLink + vm.formatHLData(data.highlight);
-         }
+                $location.path('detail/' + aData._source.type + '/' + aData._source.id);
+            });
+        });
+        return nRow;
     }
 
 
 
-
-//    $scope.search = function() {
-//        var defered = $q.defer();
-//        var query = '{' +
-//                        //'"track_scores": true,' + { "告警描述" : "desc" }, { "处理步骤" : "desc" },
-////                        '"sort": [{ "_score" : "asc" }],' +
-//                        '"sort":  [{ "_score": { "order": "desc" }}],' +
-//                        '"size": 100,' +
-//                        '"query": {' +
-//                            '"query_string": {' +
-//                                '"fields" : ["id", "description", "explanation", "level", "impact", "possible_cause", "processing_step", "reference"],' +
-//                                '"query": "' + $scope.searchContent + '",' +
-////                                '"fields": [_all],' +
-//                                '"default_operator": "or"' +
-//                                '}' +
-//                            '},' +
-//                            '"highlight": {"fields": {"id": {},"description": {},"explanation": {},"level": {},"impact": {},"possible_cause": {},"processing_step": {},"reference": {}}}' +
-//                      '}';
-//
-//                                //"告警描述": "' + $scope.searchContent + '"}}}';
-//        $http({
-//                url: 'http://103.235.243.213:9200/occikb/_search',
-//                method: 'POST',
-//                data: query
-//             }).then(function (result) {
-//                $scope.data = result;
-////                $scope.results = result.data.hits.hits;
-//                defered.resolve(result.data.hits.hits);
-//             }).catch(function (result) {
-//                defered.reject(result);
-//             });
-//         return defered.promise;
-//    };
-//
-//    var promise = $scope.search();
-
-//    promise.then(function(data) {
-//             $scope.results = data;
-//         }, function(data) {
-//             $scope.results = {error: 'can not find'};
-//         });
-
+   function actionsHtml(data, type, full, meta) {
+         var idLink = '<a id="' + data._id + '" href="javascript:void(0)"'   +'">' + data._id + '</a><br/>';
+         if (typeof(data.highlight) == 'undefined') {
+            return idLink + vm.formatSourceData(data._source);
+         } else {
+            return idLink + vm.formatHLData(data.highlight);
+         }
+    };
 
 }

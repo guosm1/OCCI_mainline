@@ -46,12 +46,16 @@
         <div ng-controller="navigatorcontroller as navctrl" class="container-fluid">
             <div class="row">
                 <div class="col-sm-3">
+                    <div class="tree-border">
                     <treecontrol class="tree-light"
                                  tree-model="dataForTheTree"
+                                 options="treeOptions"
+                                 node-children="children"
                                  on-selection="showSelected(node)"
                                  selected-node="node">
-                        {{node.description}}
+                        <span id="{{node.type}}_{{node.id}}">{{node.description}}</span>
                     </treecontrol>
+                    </div>
                 </div>
                 <div class="col-sm-9">
                     <form novalidate class="search-form form-inline">
