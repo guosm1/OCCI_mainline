@@ -1,3 +1,4 @@
+'use strict';
 function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFactory, CONFIG) {
 
     var addVm  = this;
