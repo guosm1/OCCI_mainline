@@ -1,16 +1,16 @@
-function deletecontroller($scope, $http, $routeParams, $q, $location, $route, CONFIG) {
+'use strict';
+function detailcontroller($scope, $http, $routeParams, $q, CONFIG) {
 
-    var deleteVm  = this;
+    $scope.internalUse = CONFIG.internalUse;
 
-
-    deleteVm.deleteDoc = function() {
+    $scope.list = function() {
 
         var defered = $q.defer();
         var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
                                 + CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
-                method: 'DELETE'
+                method: 'GET'
              }).then(function (data) {
                 defered.resolve(data);
              }).catch(function (data) {
@@ -19,15 +19,13 @@ function deletecontroller($scope, $http, $routeParams, $q, $location, $route, CO
         return defered.promise;
     };
 
-
-    var promise = deleteVm.deleteDoc();
+    var promise = $scope.list();
 
     promise.then(function(data) {
-             $scope.deleteMessages = "delete successfully!";
-             $location.path("search");
-             // refresh the whole page after the delete, but it need to enhance partial refresh
-             window.location.reload();
+             $scope.detail = data.data;
          }, function(data) {
-             $scope.deleteMessages = "can not delete, please contact the admin!";
+             $scope.detail = {error: 'can not find'};
          });
+
+
 }

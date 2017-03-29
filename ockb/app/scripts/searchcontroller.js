@@ -1,3 +1,4 @@
+'use strict';
 function searchcontroller($scope, $http, $routeParams, $location, $q, $translate, $timeout, DTOptionsBuilder, DTColumnBuilder, CONFIG) {
 
     var vm = this;

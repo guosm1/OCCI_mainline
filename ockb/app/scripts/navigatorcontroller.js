@@ -1,3 +1,4 @@
+'use strict';
 angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, $location, docTypesFactory, CONFIG) {
 
     var vm = this;
