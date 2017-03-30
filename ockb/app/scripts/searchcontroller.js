@@ -126,7 +126,7 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
                         .withOption('lengthChange', false)
                         .withOption('stateSave', false)
                         .withOption('ordering', false)
-                        .withDisplayLength(3)
+                        .withDisplayLength(10)
                         .withLanguage({
                             "oPaginate": {
                                 "sFirst": "&lt;&lt;",
