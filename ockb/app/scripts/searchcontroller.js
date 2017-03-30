@@ -1,5 +1,5 @@
 'use strict';
-function searchcontroller($scope, $http, $routeParams, $location, $q, $translate, $timeout, DTOptionsBuilder, DTColumnBuilder, CONFIG) {
+function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $translate, $timeout, DTOptionsBuilder, DTColumnBuilder, CONFIG) {
 
     var vm = this;
     vm.searchContent = $routeParams.searchContent;
@@ -126,7 +126,7 @@ function searchcontroller($scope, $http, $routeParams, $location, $q, $translate
                         .withOption('lengthChange', false)
                         .withOption('stateSave', false)
                         .withOption('ordering', false)
-                        .withDisplayLength(10)
+                        .withDisplayLength(3)
                         .withLanguage({
                             "oPaginate": {
                                 "sFirst": "&lt;&lt;",
@@ -134,7 +134,7 @@ function searchcontroller($scope, $http, $routeParams, $location, $q, $translate
                                 "sNext": "&gt;",
                                 "sPrevious": "&lt;"
                             }
-                        }).withOption('rowCallback', rowCallback);
+                        });//.withOption('rowCallback', rowCallback);
 
     $scope.dtColumns = [
         DTColumnBuilder.newColumn(null).withTitle($translate('index.table.search.results')).notSortable()
@@ -142,40 +142,47 @@ function searchcontroller($scope, $http, $routeParams, $location, $q, $translate
     ];
 
 
-    function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
-        $('a', nRow).unbind('click');
-        $('a', nRow).bind('click', function() {
-            $scope.$apply(function() {
-                var treecontrol = angular.element("treecontrol");
-                var firstChildNode = treecontrol.find("#" + aData._source.type + '_' + aData._source.type);
-                var secondChildNode = treecontrol.find("#" + aData._source.type + '_' + aData._source.id);
-
-                if (secondChildNode.length == 0) {
-                    $timeout(function () {
-                        firstChildNode.trigger('click');
-                    }, 100);
-
-                    $timeout(function () {
-                        // find again becase first node just expanded
-                        treecontrol.find("#" + aData._source.type + '_' + aData._source.id).trigger('click');
-                    }, 100);
-                } else {
-                    $timeout(function () {
-                        secondChildNode.trigger('click');
-                    }, 100);
-                }
-
-                $location.path('detail/' + aData._source.type + '/' + aData._source.id);
-            });
-        });
-        return nRow;
-    }
+//    function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+//        // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
+//        $('a', nRow).unbind('click');
+//        $('a', nRow).bind('click', function() {
+//            $scope.$apply(function() {
+//                var treecontrol = angular.element("treecontrol");
+//                var firstChildNode = treecontrol.find("#" + aData._source.type + '_' + aData._source.type);
+//                var secondChildNode = treecontrol.find("#" + aData._source.type + '_' + aData._source.id);
+//
+//                if (secondChildNode.length == 0) {
+//                    $timeout(function () {
+//                        firstChildNode.trigger('click');
+//                    }, 100);
+//
+//                    $timeout(function () {
+//                        // find again becase first node just expanded
+//                        treecontrol.find("#" + aData._source.type + '_' + aData._source.id).trigger('click');
+//                    }, 100);
+//                } else {
+//                    $timeout(function () {
+//                        secondChildNode.trigger('click');
+//                    }, 100);
+//                }
+//
+////                $location.path('detail/' + aData._source.type + '/' + aData._source.id);
+//            });
+//        });
+//        return nRow;
+//    }
 
 
 
    function actionsHtml(data, type, full, meta) {
-         var idLink = '<a id="' + data._id + '" href="javascript:void(0)"'   +'">' + data._id + '</a><br/>';
+          var idLink = '<a target="_blank" href="#!/detail/' +
+                                data._type +
+                                '/' +
+                                data._id +
+                                '">' +
+                                data._id +
+                               '</a><br/>';
+//         var idLink = '<a id="' + data._id + '" href="javascript:void(0)"'   +'">' + data._id + '</a><br/>';
          if (typeof(data.highlight) == 'undefined') {
             return idLink + vm.formatSourceData(data._source);
          } else {
