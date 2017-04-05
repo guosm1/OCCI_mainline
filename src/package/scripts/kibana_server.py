@@ -19,7 +19,6 @@ limitations under the License.
 """
 
 from resource_management import *
-from kibana import kibana
 import sys
 
 def exclude_package_flag():
@@ -45,7 +44,7 @@ class KibanaMaster(Script):
   def install(self, env):
     import params
     env.set_params(params)
-    exclude_packages = ['elastic*', 'logstash*', 'python-requests']
+    exclude_packages = ['elastic*', 'logstash*']
     if exclude_package_flag() == True:
       self.install_packages(env, exclude_packages)
     else:
@@ -62,6 +61,7 @@ class KibanaMaster(Script):
     
   def configure(self, env):
     import params
+    from kibana import kibana
     env.set_params(params)
     kibana()
 
