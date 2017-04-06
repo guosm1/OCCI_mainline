@@ -52,7 +52,7 @@ def execute(configurations={}, parameters={}, host_name=None):
         mr_exectime_threshold_critical =_coerce_to_integer(parameters[MR_EXECTIME_CRITICAL_THRESHOLD_KEY])
 
     # critical applications
-    payload = json.loads('{"fields" : ["appId"], "query" : {"bool":  {"must": [ {"and": [{"range" : {"elapsedTime":{"gte": %d}}}, {"range": {"finishedTime": {"gt" : "now-%dm"}}}]}]}}}'%(mr_exectime_threshold_critical,interval))
+    payload = json.loads('{"fields" : ["appId"], "query" : {"bool":  { "filter": {"term":{"appType":"mapreduce"}},"must": [ {"and": [{"range" : {"elapsedTime":{"gte": %d}}}, {"range": {"finishedTime": {"gt" : "now-%dm"}}}]}]}}}'%(mr_exectime_threshold_critical,interval))
     headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
     try:
         r = requests.post(url, data=json.dumps(payload), headers=headers)
@@ -70,7 +70,7 @@ def execute(configurations={}, parameters={}, host_name=None):
         msgs.append("The execution time of MapReduce Job '{0}' is greater than {1} seconds.".format(", ".join(err_apps), mr_exectime_threshold_critical))
         
     # warning applications
-    payload = json.loads('{"fields" : ["appId"], "query" : {"bool":  {"must": [ {"and": [{"range" : {"elapsedTime":{"gte": %d, "lte": %d}}}, {"range": {"finishedTime": {"gt" : "now-%dm"}}}]}]}}}'%(mr_exectime_threshold_warning, mr_exectime_threshold_critical,interval))
+    payload = json.loads('{"fields" : ["appId"], "query" : {"bool":  { "filter": {"term":{"appType":"mapreduce"}}, "must": [ {"and": [{"range" : {"elapsedTime":{"gte": %d, "lte": %d}}}, {"range": {"finishedTime": {"gt" : "now-%dm"}}}]}]}}}'%(mr_exectime_threshold_warning, mr_exectime_threshold_critical,interval))
     headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
     try:
         r = requests.post(url, data=json.dumps(payload), headers=headers)
