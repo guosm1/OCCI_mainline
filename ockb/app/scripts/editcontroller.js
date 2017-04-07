@@ -1,16 +1,16 @@
 'use strict';
+
 function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFactory, CONFIG) {
 
-    var editVm  = this;
     $scope.editMessages = "";
     // get the types from navigator types
     $scope.editTypesSelectOption = docTypesFactory._getTypes();
 
 
-    editVm.getDoc = function() {
+    $scope.getDoc = function() {
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
-                                + CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
+                                 CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
                 method: 'GET'
@@ -23,7 +23,7 @@ function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFact
     };
 
 
-    var promise = editVm.getDoc();
+    var promise = $scope.getDoc();
 
     promise.then(function(data) {
 
@@ -38,14 +38,14 @@ function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFact
 
 
              $scope.editContent.possible_cause = '';
-             angular.forEach(data.data._source.possible_cause, function(value, key) {
+             angular.forEach(data.data._source.possible_cause, function(value) {
                 $scope.editContent.possible_cause = $scope.editContent.possible_cause + '"' + value.toString() + '",';
              });
              $scope.editContent.possible_cause = '[' + $scope.editContent.possible_cause.slice(0, -1) + ']';
 
 
              $scope.editContent.processing_step = '';
-             angular.forEach(data.data._source.processing_step, function(value, key) {
+             angular.forEach(data.data._source.processing_step, function(value) {
                 $scope.editContent.processing_step = $scope.editContent.processing_step + '"' + value.toString() + '",';
              });
              $scope.editContent.processing_step = '[' + $scope.editContent.processing_step.slice(0, -1) + ']';
@@ -56,10 +56,10 @@ function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFact
 
 
 
-    editVm.update = function() {
+    $scope.update = function() {
 
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
-                                + CONFIG.esIndex + "/" + $scope.editContent.type + '/' + $scope.editContent.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
+                                 CONFIG.esIndex + "/" + $scope.editContent.type + '/' + $scope.editContent.id;
         var defered = $q.defer();
         var editBody = '{' +
                             '"id": "' + $scope.editContent.id + '",' +
@@ -88,7 +88,7 @@ function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFact
 
     $scope.saveEditContent = function() {
 
-        var editPromise = editVm.update();
+        var editPromise = $scope.update();
         editPromise.then(function(data) {
                  $scope.editMessages = "edit successfully!";
              }, function(data) {

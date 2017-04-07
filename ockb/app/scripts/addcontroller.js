@@ -1,18 +1,18 @@
 'use strict';
+
 function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFactory, CONFIG) {
 
-    var addVm  = this;
     $scope.addMessages = "";
     $scope.addContentResponse = false;
     // get the types from navigator types
     $scope.addTypesSelectOption = docTypesFactory._getTypes();
 
 
-    addVm.getDoc = function() {
+    $scope.getDoc = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
-                                + CONFIG.esIndex + "/" + $scope.addContent.type + '/' + $scope.addContent.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
+                                CONFIG.esIndex + "/" + $scope.addContent.type + '/' + $scope.addContent.id;
 
         $http({
                 url: url,
@@ -27,11 +27,11 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
     };
 
 
-    addVm.create = function() {
+    $scope.create = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
-                                + CONFIG.esIndex + "/" + $scope.addContent.type + '/' + $scope.addContent.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
+                                CONFIG.esIndex + "/" + $scope.addContent.type + '/' + $scope.addContent.id;
         var addBody = '{' +
                             '"id": "' + $scope.addContent.id + '",' +
                             '"type": "' + $scope.addContent.type + '",' +
@@ -60,7 +60,7 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
 
     $scope.saveAddContent = function() {
 
-        var promise = addVm.getDoc();
+        var promise = $scope.getDoc();
 
         promise.then(function(data) {
                  $scope.checkAddContentFound = data.data.found;
@@ -69,7 +69,7 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
                      $scope.addMessages = "can not create, because the doc is existed!";
 
                  } else {
-                      var addPromise = addVm.create();
+                      var addPromise = $scope.create();
                       addPromise.then(function(data) {
                                $scope.addMessages = "create successfully!";
                            }, function(data) {
@@ -81,7 +81,7 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
                            });
                  }
              }, function(data) {
-                 $scope.addContentFound = {error: 'can not find'};
+                 $scope.addContentFound = data;
              });
     };
 

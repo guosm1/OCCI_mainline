@@ -1,4 +1,5 @@
 'use strict';
+
 angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, $location, docTypesFactory, CONFIG) {
 
     var vm = this;
@@ -9,7 +10,7 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
         nodeChildren: "children",
         dirSelectable: false,
         allowDeselect: false
-    }
+    };
 
 
 
@@ -31,8 +32,8 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
 
     vm.get_ids = function(type) {
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":"
-                            + CONFIG.esPort + "/" + CONFIG.esIndex +"/_search";
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" +
+                             CONFIG.esPort + "/" + CONFIG.esIndex +"/_search";
         var query = '{' +
                         '"size": 10000,' +
                         '"sort" : [' +
@@ -43,7 +44,7 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                         '}' +
                      '}';
         $http({
-                url: url, //'http://36.110.131.101:9200/occikb/_search',
+                url: url,
                 method: 'POST',
                 data: query
              }).then(function (result) {
@@ -74,12 +75,12 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                                 "description": key,
                                 "children": []
                              };
-                             angular.forEach(data, function(value, key) {
+                             angular.forEach(data, function(value) {
                                 var tmp = value._source;
-                                tmp["children"] = [];
-                                tmp["id"] = value._source.id;
-                                tmp["type"] = value._source.type;
-                                tmp["description"] = value._source.description;
+                                tmp.children = [];
+                                tmp.id = value._source.id;
+                                tmp.type = value._source.type;
+                                tmp.description = value._source.description;
                                 item.children.push(tmp);
                              });
                              $scope.dataForTheTree.push(item);

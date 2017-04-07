@@ -6,8 +6,8 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, CONFIG) {
     $scope.list = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
-                                + CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
+                                 CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
                 method: 'GET'
@@ -33,7 +33,7 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, CONFIG) {
          var firstChildNode = treecontrol.find("#" + $routeParams.type + '_' + $routeParams.type);
          var secondChildNode = treecontrol.find("#" + $routeParams.type + '_' + $routeParams.id);
 
-         if (secondChildNode.length == 0) {
+         if (secondChildNode.length === 0) {
              $timeout(function () {
                  firstChildNode.trigger('click');
              }, 100);

@@ -1,14 +1,11 @@
 'use strict';
 function deletecontroller($scope, $http, $routeParams, $q, $location, $route, CONFIG) {
 
-    var deleteVm  = this;
-
-
-    deleteVm.deleteDoc = function() {
+    $scope.deleteDoc = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
-                                + CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
+                                 CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
                 method: 'DELETE'
@@ -21,7 +18,7 @@ function deletecontroller($scope, $http, $routeParams, $q, $location, $route, CO
     };
 
 
-    var promise = deleteVm.deleteDoc();
+    var promise = $scope.deleteDoc();
 
     promise.then(function(data) {
              $scope.deleteMessages = "delete successfully!";
