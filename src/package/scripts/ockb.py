@@ -17,19 +17,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 """
-from resource_management.libraries.functions import format
-from resource_management.libraries.script.script import Script
+from resource_management import *
+import sys
+from copy import deepcopy
 
-config = Script.get_config()
 
-ockb_pid_dir = config['configurations']['ockb-env']['ockb_pid_dir']
-ockb_pid_file = format("{ockb_pid_dir}/ockb.pid")
+def ockb(role=None):
+    import params
+    directories = [params.ockb_home,
+                   params.ockb_log_dir,
+                   params.ockb_pid_dir,
+                   params.ockb_conf_dir]
 
-logstash_pid_dir = config['configurations']['logstash-env']['logstash_pid_dir']
-logstash_pid_file = format("{logstash_pid_dir}/logstash.pid")
+    Directory(directories,
+              owner=params.ockb_user,
+              group=params.ockb_user_group,
+              mode=0755,
+              cd_access='a'
+              )
 
-elastic_pid_dir = config['configurations']['elastic-env']['elastic_pid_dir']
-elastic_pid_file = format("{elastic_pid_dir}/elasticsearch.pid")
-
-kibana_pid_dir = config['configurations']['kibana-env']['kibana_pid_dir']
-kibana_pid_file = format("{kibana_pid_dir}/kibana.pid")
