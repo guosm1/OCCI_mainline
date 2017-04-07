@@ -9,7 +9,20 @@ memoryTotal = 0
 vcoreTotal = 0
 # this time is the records generation time in yarn.apps file
 selfTimestamp = datetime.datetime.fromtimestamp(int(time.time())).isoformat()
+rm_hosts = {{rm_hosts}}
 
+def requests_rm_get(resourcepath):
+    r = []
+    for rm_host in rm_hosts:
+        try:
+            r = requests.get('http://' + rm_host + ':{{rm_port}}/ws/v1/' + resourcepath)
+            break
+        except:
+            if rm_host != rm_hosts[-1]:
+                pass
+            else:
+                raise
+    return r.json()
 def parse_queue(queueList, parent):
     global queueCapacity
     for queue in queueList:
@@ -27,9 +40,8 @@ def parse_queue(queueList, parent):
             queueCapacity[path]['vcoreFree'] = vcore
             queueCapacity[path]['memoryFree'] = memory
             
-def yarn_scheduler():    
-    r = requests.get('http://{{rm_host}}:{{rm_port}}/ws/v1/cluster/scheduler')
-    output = r.json()
+def yarn_scheduler():
+    output = requests_rm_get('cluster/scheduler')
     rootQueue = output['scheduler']['schedulerInfo']['queueName']
     if 'queues' in output['scheduler']['schedulerInfo'] and 'queue' in output['scheduler']['schedulerInfo']['queues']:
         queues = output['scheduler']['schedulerInfo']['queues']['queue']
@@ -37,21 +49,20 @@ def yarn_scheduler():
         
 def yarn_metics():
     global memoryTotal
-    global vcoreTotal 
-    r = requests.get('http://{{rm_host}}:{{rm_port}}/ws/v1/cluster/metrics')
-    output = r.json()
+    global vcoreTotal
+    output = requests_rm_get('cluster/metrics')
     memoryTotal = int(output['clusterMetrics']['totalMB'])
     vcoreTotal = int(output['clusterMetrics']['totalVirtualCores'])
       
 def yarn_apps():
-    r = requests.get('http://{{rm_host}}:{{rm_port}}/ws/v1/cluster/apps')
-    output = r.json()
+    output = requests_rm_get('cluster/apps')
     apps = output['apps']
     vcoreUsed = 0
     memoryUsed = 0
     if apps is not None:
         appList = apps['app']
         for app in appList:
+            name = app['name']
             id = app['id']
             type = app['applicationType']
             state = app['state']
@@ -93,7 +104,7 @@ def yarn_apps():
                     value['memoryFree'] = value['memoryFree'] - memory
                     break
             
-            print "%s %s %s %s %s %s %s %d %d %d %d %d %d %d %s" % (selfTimestamp, id, type, state, finalStatus, queue, user, vcores, memory, vcoreCapacity, memoryCapacity, vcoreSeconds, memorySeconds, elapsedTime, selfFinishedTime)
+            print "%s %s %s %s %s %s %s %s %d %d %d %d %d %d %d %s" % (selfTimestamp, id, name, type, state, finalStatus, queue, user, vcores, memory, vcoreCapacity, memoryCapacity,vcoreSeconds, memorySeconds, elapsedTime, selfFinishedTime)
             vcoreUsed = vcoreUsed + vcores
             memoryUsed = memoryUsed + memory
             
@@ -102,7 +113,7 @@ def yarn_apps():
             value['vcoreFree'] = 0;
         if value['memoryFree'] < 0:
             value['memoryFree'] = 0;
-        print "%s %s %s %s %s %s %s %d %d %d %d %d %d %d %s" % (selfTimestamp, "None", "OTHERS", "RUNNING", "UNDEFINED", key, "None", value['vcoreFree'], value['memoryFree'], value['vcore'], value['memory'], 0, 0, 0, selfFinishedTime)
+        print "%s %s %s %s %s %s %s %s %d %d %d %d %d %d %d %s" % (selfTimestamp, "None", "None", "OTHERS", "RUNNING", "UNDEFINED", key, "None", value['vcoreFree'], value['memoryFree'], value['vcore'], value['memory'], 0, 0, 0, selfTimestamp)
 
     vcorFree = vcoreTotal - vcoreUsed
     if vcorFree < 0:
@@ -110,8 +121,8 @@ def yarn_apps():
     memoryFree = memoryTotal - memoryUsed
     if memoryFree < 0:
         memoryFree = 0
-    print "%s %s %s %s %s %s %s %d %d %d %d %d %d %d %s" % (selfTimestamp, "None", "OTHERS", "RUNNING", "UNDEFINED", "None", "None", vcorFree, memoryFree, vcoreTotal, memoryTotal, 0, 0, 0, selfFinishedTime)
-    print "%s %s %s %s %s %s %s %d %d %d %d %d %d %d %s" % (selfTimestamp, "Others", "OTHERS", "RUNNING", "UNDEFINED", "Others", "None", vcorFree, memoryFree, vcoreTotal, memoryTotal, 0, 0, 0, selfFinishedTime)
+    print "%s %s %s %s %s %s %s %s %d %d %d %d %d %d %d %s" % (selfTimestamp, "None", "None", "OTHERS", "RUNNING", "UNDEFINED", "None", "None", vcorFree, memoryFree, vcoreTotal,memoryTotal, 0, 0, 0, selfTimestamp)
+    print "%s %s %s %s %s %s %s %s %d %d %d %d %d %d %d %s" % (selfTimestamp, "Others", "None", "OTHERS", "RUNNING", "UNDEFINED", "Others", "None", vcorFree, memoryFree, vcoreTotal, memoryTotal, 0, 0, 0, selfTimestamp)
 
 if __name__ == "__main__":
     yarn_metics()
