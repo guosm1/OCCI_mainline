@@ -1,14 +1,14 @@
 'use strict';
+
 function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $translate, $timeout, DTOptionsBuilder, DTColumnBuilder, CONFIG) {
 
-    var vm = this;
-    vm.searchContent = $routeParams.searchContent;
+    $scope.searchContent = $routeParams.searchContent;
     // set the searchcontroller parent's parent's searchContent,
     // this is not a good way, just here for quick fix the issue
-    $scope.navctrl.searchContent = vm.searchContent;
+    $scope.navctrl.searchContent = $scope.searchContent;
 
 
-    vm.formatHLData = function(highLight) {
+    $scope.formatHLData = function(highLight) {
         var str = "";
         angular.forEach(highLight, function(value, key) {
             switch (key)
@@ -56,7 +56,7 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
     };
 
 
-    vm.formatSourceData = function(source) {
+    $scope.formatSourceData = function(source) {
         var str = "";
         str = $translate.instant('detail.label.id') + ": " + source.id + "<br/>" +
                 $translate.instant('detail.label.type') + ": " + source.type + "<br/>" +
@@ -85,8 +85,8 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
 
     $scope.search = function() {
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/"
-                                + CONFIG.esIndex + "/_search";
+        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
+                                 CONFIG.esIndex + "/_search";
         var query = '{' +
                         //'"track_scores": true,' + { "告警描述" : "desc" }, { "处理步骤" : "desc" },
 //                        '"sort": [{ "_score" : "asc" }],' +
@@ -95,7 +95,7 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
                         '"query": {' +
                             '"query_string": {' +
                                 '"fields" : ["id", "description", "explanation", "level", "impact", "possible_cause", "processing_step", "reference"],' +
-                                '"query": "' + vm.searchContent + '",' +
+                                '"query": "' + $scope.searchContent + '",' +
 //                                '"fields": [_all],' +
                                 '"default_operator": "or"' +
                                 '}' +
@@ -115,6 +115,22 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
              });
          return defered.promise;
     };
+
+
+   function actionsHtml(data) {
+          var idLink = '<a target="_blank" href="#!/detail/' +
+                                data._type +
+                                '/' +
+                                data._id +
+                                '">' +
+                                data._id +
+                               '</a><br/>';
+         if (typeof(data.highlight) === 'undefined') {
+            return idLink + $scope.formatSourceData(data._source);
+         } else {
+            return idLink + $scope.formatHLData(data.highlight);
+         }
+    }
 
 
     var promise = $scope.search();
@@ -140,54 +156,5 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
         DTColumnBuilder.newColumn(null).withTitle($translate('index.table.search.results')).notSortable()
             .renderWith(actionsHtml)
     ];
-
-
-//    function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-//        // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
-//        $('a', nRow).unbind('click');
-//        $('a', nRow).bind('click', function() {
-//            $scope.$apply(function() {
-//                var treecontrol = angular.element("treecontrol");
-//                var firstChildNode = treecontrol.find("#" + aData._source.type + '_' + aData._source.type);
-//                var secondChildNode = treecontrol.find("#" + aData._source.type + '_' + aData._source.id);
-//
-//                if (secondChildNode.length == 0) {
-//                    $timeout(function () {
-//                        firstChildNode.trigger('click');
-//                    }, 100);
-//
-//                    $timeout(function () {
-//                        // find again becase first node just expanded
-//                        treecontrol.find("#" + aData._source.type + '_' + aData._source.id).trigger('click');
-//                    }, 100);
-//                } else {
-//                    $timeout(function () {
-//                        secondChildNode.trigger('click');
-//                    }, 100);
-//                }
-//
-////                $location.path('detail/' + aData._source.type + '/' + aData._source.id);
-//            });
-//        });
-//        return nRow;
-//    }
-
-
-
-   function actionsHtml(data, type, full, meta) {
-          var idLink = '<a target="_blank" href="#!/detail/' +
-                                data._type +
-                                '/' +
-                                data._id +
-                                '">' +
-                                data._id +
-                               '</a><br/>';
-//         var idLink = '<a id="' + data._id + '" href="javascript:void(0)"'   +'">' + data._id + '</a><br/>';
-         if (typeof(data.highlight) == 'undefined') {
-            return idLink + vm.formatSourceData(data._source);
-         } else {
-            return idLink + vm.formatHLData(data.highlight);
-         }
-    };
 
 }

@@ -159,7 +159,15 @@ gulp.task('client:build', ['html', 'styles'], function () {
   var cssFilter = $.filter('**/*.css');
 
   return gulp.src(paths.views.main)
-    .pipe($.useref({searchPath: [yeoman.app, '.tmp']}))
+    .pipe($.useref({
+      transformPath: function(filePath) {
+        if(filePath.indexOf("/app/bower_components") === -1) {
+          return filePath.replace('/bower_components', '/app/bower_components')
+        }else{
+          return filePath;
+        }
+      }
+    }))
     .pipe(jsFilter)
     .pipe($.ngAnnotate())
     .pipe($.uglify())
@@ -170,6 +178,13 @@ gulp.task('client:build', ['html', 'styles'], function () {
     .pipe($.rev())
     .pipe($.revReplace())
     .pipe(gulp.dest(yeoman.dist));
+});
+
+gulp.task('client:rename', ['client:build'], function(){
+  return gulp.src(yeoman.dist + "/index*.html")
+    .pipe($.rimraf({force: true}))
+    .pipe($.rename("index.html"))
+    .pipe(gulp.dest(yeoman.dist))
 });
 
 gulp.task('html', function () {
@@ -187,6 +202,26 @@ gulp.task('images', function () {
     .pipe(gulp.dest(yeoman.dist + '/images'));
 });
 
+gulp.task('favicon', function(){
+  return gulp.src(yeoman.app + '/favicon.ico')
+    .pipe(gulp.dest(yeoman.dist));
+});
+
+gulp.task('pageNotFound', function(){
+  return gulp.src(yeoman.app + '/404.html')
+    .pipe(gulp.dest(yeoman.dist));
+});
+
+gulp.task('languages', function(){
+  return gulp.src(yeoman.app + '/languages/*')
+    .pipe(gulp.dest(yeoman.dist + '/languages'));
+});
+
+gulp.task('conf', function(){
+  return gulp.src(yeoman.app + '/conf/*')
+    .pipe(gulp.dest(yeoman.dist + '/conf'));
+});
+
 gulp.task('copy:extras', function () {
   return gulp.src(yeoman.app + '/*/.*', { dot: true })
     .pipe(gulp.dest(yeoman.dist));
@@ -198,7 +233,8 @@ gulp.task('copy:fonts', function () {
 });
 
 gulp.task('build', ['clean:dist'], function () {
-  runSequence(['images', 'copy:extras', 'copy:fonts', 'client:build']);
+  runSequence(['images', 'favicon', 'pageNotFound', 'languages', 'conf',
+                  'copy:extras', 'copy:fonts', 'client:rename', 'client:build']);
 });
 
 gulp.task('default', ['build']);

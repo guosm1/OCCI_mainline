@@ -2,6 +2,7 @@
 <html lang="en" ng-app="ockbApp" ng-controller="appController">
     <head>
         <meta charset="utf-8">
+        <!-- build:js(.) scripts/vendor.js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/datatables.net/js/jquery.dataTables.js"></script>
         <script src="bower_components/angular/angular.js"></script>
@@ -10,15 +11,20 @@
         <script src="bower_components/angular-translate/angular-translate.js"></script>
         <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
         <script src="bower_components/angular-tree-control/angular-tree-control.js"></script>
+        <!-- endbuild -->
 
+        <!-- build:css(.) styles/vendor.css -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
-        <link rel="stylesheet" type="text/css" href="bower_components/angular-tree-control/css/tree-control.css">
+        <link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control.css">
+        <!-- endbuild -->
 
-        <link rel="stylesheet" href="styles/highlight.css">
+        <!-- build:css(app) styles/index.css -->
         <link rel="stylesheet" href="styles/index.css">
-
-        <script src="scripts/config.js"></script>
+        <link rel="stylesheet" href="styles/highlight.css">
+        <!-- endbuild -->
+        <script src="conf/config.js"></script>
+        <!-- build:js(app) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/searchcontroller.js"></script>
         <script src="scripts/detailcontroller.js"></script>
@@ -26,6 +32,7 @@
         <script src="scripts/addcontroller.js"></script>
         <script src="scripts/editcontroller.js"></script>
         <script src="scripts/deletecontroller.js"></script>
+        <!-- endbuild -->
     </head>
     <body>
         <div>
