@@ -20,13 +20,18 @@ limitations under the License.
 
 from resource_management import *
 from elastic import elastic
+from kibana_server import exclude_package_flag
 
 class ElasticMaster(Script):
   def install(self, env):
     import params
     env.set_params(params)
-    self.install_packages(env)
-    
+    exclude_packages = ['kibana*', 'logstash*', 'python-requests']
+    if exclude_package_flag() == True:
+      self.install_packages(env, exclude_packages)
+    else:
+      self.install_packages(env)
+
   def configure(self, env):
     import params
     env.set_params(params)

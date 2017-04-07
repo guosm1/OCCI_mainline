@@ -19,7 +19,6 @@ limitations under the License.
 """
 from resource_management import *
 import json
-import urllib3
 queueNames=[]
 
 def parse_queue(queueList, parent):
@@ -33,6 +32,7 @@ def parse_queue(queueList, parent):
             queueNames.append(path)
 
 def yarn_scheduler(params):
+    import urllib3
     queueNameList=['root.default']
     try:
         http = urllib3.PoolManager()
@@ -50,7 +50,7 @@ def yarn_scheduler(params):
     return queueNameList
 
 def kibana(role=None):
-    import params    
+    import params
     directories = [params.kibana_home,
                    params.kibana_log_dir, 
                    params.kibana_conf_dir]
