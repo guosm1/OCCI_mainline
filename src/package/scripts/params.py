@@ -25,12 +25,19 @@ import status_params
 # server configurations
 config = Script.get_config()
 
+ockb_user = config['configurations']['ockb-env']['ockb_user']
+ockb_user_group = config['configurations']['ockb-env']['ockb_user_group']
 logstash_user = config['configurations']['logstash-env']['logstash_user']
 logstash_user_group = config['configurations']['logstash-env']['logstash_user_group']
 elastic_user = config['configurations']['elastic-env']['elastic_user']
 elastic_user_group = config['configurations']['elastic-env']['elastic_user_group']
 kibana_user = config['configurations']['kibana-env']['kibana_user']
 kibana_user_group = config['configurations']['kibana-env']['kibana_user_group']
+
+ockb_home = "/opt/ockb"
+ockb_bin = "/opt/ockb/bin"
+ockb_conf_dir = "/opt/ockb/app/conf"
+ockb_log_dir = config['configurations']['ockb-site']['logging.dest']
 
 elastic_home = "/usr/share/elasticsearch"
 elastic_plugins = "/usr/share/elasticsearch/plugins"
@@ -51,6 +58,9 @@ kibana_bin = "/opt/kibana/bin"
 kibana_conf_dir = "/opt/kibana/config"
 kibana_log_dir = config['configurations']['kibana-site']['logging.dest']
 
+
+ockb_pid_dir = status_params.ockb_pid_dir
+ockb_pid_file = status_params.ockb_pid_file
 logstash_pid_dir = status_params.logstash_pid_dir
 logstash_pid_file = status_params.logstash_pid_file
 elastic_pid_dir = status_params.elastic_pid_dir
@@ -113,6 +123,18 @@ elastic_port = config['configurations']['elasticsearch-site']['http.port']
 
 kibana_port = config['configurations']['kibana-site']['server.port']
 kinana_index = config['configurations']['kibana-site']['kibana.index']
+
+ockb_port = config['configurations']['ockb-site']['server.port']
+
+if 'clusterHostInfo' in config and 'ockb_server_hosts' in config['clusterHostInfo']:
+    ockb_server_hosts = config['clusterHostInfo']['ockb_server_hosts']
+    ockb_host = ockb_server_hosts[0]
+else:
+    ockb_server_hosts = default("/clusterHostInfo/ockb_server_hosts", None)
+    if type(ockb_server_hosts) is list:
+        ockb_host = ockb_server_hosts[0]
+    else:
+        ockb_host = ockb_server_hosts
 
 if (('logstash-data-source' in config['configurations']) and ('content' in config['configurations']['logstash-data-source'])):
     logstash_conf = config['configurations']['logstash-data-source']['content']

@@ -50,6 +50,18 @@
             <timeout>600</timeout>
           </commandScript>
         </component>
+        <component>
+          <name>OCKB_SERVER</name>
+          <displayName>Knowledge Base Server</displayName>
+          <category>SLAVE</category>
+          <cardinality>1</cardinality>
+          <versionAdvertised>true</versionAdvertised>
+          <commandScript>
+            <script>scripts/ockb_server.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>600</timeout>
+          </commandScript>
+        </component>
       </components>
       <osSpecifics>
         <osSpecific>
@@ -79,6 +91,7 @@
         <config-type>elasticsearch-site</config-type>
         <config-type>logstash-data-source</config-type>
         <config-type>kibana-site</config-type>
+        <config-type>ockb-site</config-type>
         <config-type>elk-env</config-type>
       </configuration-dependencies>
     </service>
