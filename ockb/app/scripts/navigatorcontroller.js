@@ -17,9 +17,9 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     vm.get_type = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" + CONFIG.esIndex;
+
         $http({
-                url: url,
+                url: '/api/types/names',
                 method: 'GET'
              }).then(function (data) {
                 defered.resolve(data);
@@ -32,19 +32,11 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
 
     vm.get_ids = function(type) {
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" +
-                             CONFIG.esPort + "/" + CONFIG.esIndex +"/_search";
-        var query = '{' +
-                        '"size": 10000,' +
-                        '"sort" : [' +
-                            '{"id" : "asc"}' +
-                        '],' +
-                        '"query" : {' +
-                            '"term" : { "_type" :"' +  type + '"}' +
-                        '}' +
-                     '}';
+
+        var query = {"query": type };
+
         $http({
-                url: url,
+                url: '/api/types/ids',
                 method: 'POST',
                 data: query
              }).then(function (result) {

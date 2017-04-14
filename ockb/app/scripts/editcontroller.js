@@ -9,8 +9,7 @@ function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFact
 
     $scope.getDoc = function() {
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
-                                 CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
+        var url = '/api/details/' + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
                 method: 'GET'
@@ -58,22 +57,21 @@ function editcontroller($scope, $http, $routeParams, $q, $location, docTypesFact
 
     $scope.update = function() {
 
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
-                                 CONFIG.esIndex + "/" + $scope.editContent.type + '/' + $scope.editContent.id;
         var defered = $q.defer();
-        var editBody = '{' +
-                            '"id": "' + $scope.editContent.id + '",' +
-                            '"type": "' + $scope.editContent.type + '",' +
-                            '"description": "' + $scope.editContent.description + '",' +
-                            '"explanation": "' + $scope.editContent.explanation + '",' +
-                            '"level": "' + $scope.editContent.level + '",' +
-                            '"impact": "' + $scope.editContent.impact + '",' +
-                            '"possible_cause": ' + $scope.editContent.possible_cause + ',' +
-                            '"processing_step": ' + $scope.editContent.processing_step + ',' +
-                            '"reference": "' + $scope.editContent.reference + '"' +
-                        '}';
+
+        var editBody = {
+                            "id": $scope.editContent.id,
+                            "type": $scope.editContent.type,
+                            "description": $scope.editContent.description,
+                            "explanation": $scope.editContent.explanation,
+                            "level": $scope.editContent.level,
+                            "impact": $scope.editContent.impact,
+                            "possible_cause": $scope.editContent.possible_cause.slice(1,-1).split(","),
+                            "processing_step": $scope.editContent.processing_step.slice(1,-1).split(","),
+                            "reference": $scope.editContent.reference,
+                       };
          $http({
-                 url: url,
+                 url: '/api/edit/',
                  method: 'PUT',
                  data: editBody
               }).then(function (data) {

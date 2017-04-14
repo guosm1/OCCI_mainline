@@ -22,6 +22,19 @@
 
 <configuration supports_final="true">
     <property>
+        <name>elasticsearch.host</name>
+        <value>localhost</value>
+        <description>Elasticsearch hostname or IP that ockb will connect to.</description>
+    </property>
+    <property>
+        <name>elasticsearch.port</name>
+        <value>9200</value>
+        <description>Elasticsearch port that ockb will connect to.</description>
+        <value-attributes>
+            <type>int</type>
+        </value-attributes>
+    </property>
+    <property>
         <name>server.port</name>
         <value>9000</value>
         <description>Knowledge Base Server Port</description>

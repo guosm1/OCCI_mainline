@@ -71,7 +71,7 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
         });
         str = str + "<br/>";
 
-        str = str + $translate.instant('detail.label.reason') + ": ";
+        str = str + $translate.instant('detail.label.steps') + ": ";
         angular.forEach(source.processing_step, function(v, k) {
             str = str + (k + 1) + "." + v;
         });
@@ -85,26 +85,11 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
 
     $scope.search = function() {
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
-                                 CONFIG.esIndex + "/_search";
-        var query = '{' +
-                        //'"track_scores": true,' + { "告警描述" : "desc" }, { "处理步骤" : "desc" },
-//                        '"sort": [{ "_score" : "asc" }],' +
-                        '"sort":  [{ "_score": { "order": "desc" }}],' +
-                        '"size": 100,' +
-                        '"query": {' +
-                            '"query_string": {' +
-                                '"fields" : ["id", "description", "explanation", "level", "impact", "possible_cause", "processing_step", "reference"],' +
-                                '"query": "' + $scope.searchContent + '",' +
-//                                '"fields": [_all],' +
-                                '"default_operator": "or"' +
-                                '}' +
-                            '},' +
-                            '"highlight": {"fields": {"id": {},"description": {},"explanation": {},"level": {},"impact": {},"possible_cause": {},"processing_step": {},"reference": {}}}' +
-                      '}';
+
+        var query = {"query": $scope.searchContent };
 
         $http({
-                url: url,
+                url: '/api/search',
                 method: 'POST',
                 data: query
              }).then(function (result) {
@@ -150,7 +135,7 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
                                 "sNext": "&gt;",
                                 "sPrevious": "&lt;"
                             }
-                        });//.withOption('rowCallback', rowCallback);
+                        });
 
     $scope.dtColumns = [
         DTColumnBuilder.newColumn(null).withTitle($translate('index.table.search.results')).notSortable()

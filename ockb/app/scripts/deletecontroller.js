@@ -4,8 +4,8 @@ function deletecontroller($scope, $http, $routeParams, $q, $location, $route, CO
     $scope.deleteDoc = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
-                                 CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
+
+        var url = '/api/delete/' + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
                 method: 'DELETE'

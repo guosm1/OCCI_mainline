@@ -36,7 +36,7 @@ kibana_user_group = config['configurations']['kibana-env']['kibana_user_group']
 
 ockb_home = "/opt/ockb"
 ockb_bin = "/opt/ockb/bin"
-ockb_conf_dir = "/opt/ockb/app/conf"
+ockb_server_conf_dir = "/opt/ockb/server/conf"
 ockb_log_dir = config['configurations']['ockb-site']['logging.dest']
 
 elastic_home = "/usr/share/elasticsearch"
@@ -124,6 +124,8 @@ elastic_port = config['configurations']['elasticsearch-site']['http.port']
 kibana_port = config['configurations']['kibana-site']['server.port']
 kinana_index = config['configurations']['kibana-site']['kibana.index']
 
+ockb_elastic_host = config['configurations']['ockb-site']['elasticsearch.host']
+ockb_elastic_port = config['configurations']['ockb-site']['elasticsearch.port']
 ockb_port = config['configurations']['ockb-site']['server.port']
 
 if 'clusterHostInfo' in config and 'ockb_server_hosts' in config['clusterHostInfo']:
