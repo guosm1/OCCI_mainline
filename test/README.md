@@ -2,7 +2,7 @@
 ## API data collector
 ### Usage
 ```
-nohup ./bulkSubmitMRApps.sh 3 10 true >>bulkSubmitMRApps.log 2>&1 &
+nohup ./bulkSubmitMRApps.sh 3 10 >>bulkSubmitMRApps.log 2>&1 &
 nohup ./timePy.sh >timePy.txt 2>&1 &
 nohup ./watch_logstash.sh >>watch_logstash.log 2>&1 &
 nohup ./watch_es.sh >>watch_es.log 2>&1 &
