@@ -1,6 +1,6 @@
 Name:           occi 
 Version:        1.0.0.0
-Release:        1
+Release:        2
 Vendor:         AsiaInfo, Inc.
 URL:            http://www.asiainfo.com
 Packager:       AsiaInfo, Inc.<For more information, please contact your sales representative>
@@ -57,3 +57,8 @@ rm -rf $RPM_BUILD_DIR/%{name}-%{version}
 %{userpath}
 
 %changelog
+* Fri Apr 14 2017  Guo Qian <guoqian3@asiainfo.com> 1.0.0.0-2
+- support both OCDP4.0 and OCDP4.1
+* Mon Jan 22 2017  Guo Qian <guoqian3@asiainfo.com> 1.0.0.0-1
+- Initial
+- support OCDP4.1
