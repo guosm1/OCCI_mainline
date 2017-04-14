@@ -6,8 +6,7 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, CONFIG) {
     $scope.list = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
-                                 CONFIG.esIndex + "/" + $routeParams.type + '/' + $routeParams.id;
+        var url = '/api/details/' + $routeParams.type + '/' + $routeParams.id;
         $http({
                 url: url,
                 method: 'GET'
@@ -47,7 +46,7 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, CONFIG) {
                  secondChildNode.trigger('click');
              }, 100);
          }
-    }, 1000);
+    }, 500);
 
 
 

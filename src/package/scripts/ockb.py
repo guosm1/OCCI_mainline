@@ -27,7 +27,7 @@ def ockb(role=None):
     directories = [params.ockb_home,
                    params.ockb_log_dir,
                    params.ockb_pid_dir,
-                   params.ockb_conf_dir]
+                   params.ockb_server_conf_dir]
 
     Directory(directories,
               owner=params.ockb_user,
@@ -36,3 +36,9 @@ def ockb(role=None):
               cd_access='a'
               )
 
+    File(format("{ockb_server_conf_dir}/config.js"),
+         content=Template(format("config.js.j2")),
+         owner=params.ockb_user,
+         group=params.ockb_user_group,
+         mode=0644
+         )

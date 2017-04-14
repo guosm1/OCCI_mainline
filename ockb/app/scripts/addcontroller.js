@@ -11,9 +11,8 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
     $scope.getDoc = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
-                                CONFIG.esIndex + "/" + $scope.addContent.type + '/' + $scope.addContent.id;
 
+        var url = '/api/details/' + $scope.addContent.type + '/' + $scope.addContent.id;
         $http({
                 url: url,
                 method: 'GET'
@@ -30,21 +29,20 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
     $scope.create = function() {
 
         var defered = $q.defer();
-        var url = CONFIG.protocol + "://" + CONFIG.esHostname + ":" + CONFIG.esPort + "/" +
-                                CONFIG.esIndex + "/" + $scope.addContent.type + '/' + $scope.addContent.id;
-        var addBody = '{' +
-                            '"id": "' + $scope.addContent.id + '",' +
-                            '"type": "' + $scope.addContent.type + '",' +
-                            '"description": "' + $scope.addContent.description + '",' +
-                            '"explanation": "' + $scope.addContent.explanation + '",' +
-                            '"level": "' + $scope.addContent.level + '",' +
-                            '"impact": "' + $scope.addContent.impact + '",' +
-                            '"possible_cause": ' + $scope.addContent.possible_cause + ',' +
-                            '"processing_step": ' + $scope.addContent.processing_step + ',' +
-                            '"reference": "' + $scope.addContent.reference + '"' +
-                        '}';
+
+        var addBody = {
+                            "id": $scope.addContent.id,
+                            "type": $scope.addContent.type,
+                            "description": $scope.addContent.description,
+                            "explanation": $scope.addContent.explanation,
+                            "level": $scope.addContent.level,
+                            "impact": $scope.addContent.impact,
+                            "possible_cause": $scope.addContent.possible_cause.slice(1,-1).split(","),
+                            "processing_step": $scope.addContent.processing_step.slice(1,-1).split(","),
+                            "reference": $scope.addContent.reference,
+                       };
          $http({
-                 url: url,
+                 url: '/api/add/',
                  method: 'PUT',
                  data: addBody
               }).then(function (data) {

@@ -33,7 +33,15 @@
     "open": "0.0.5",
     "rimraf": "^2.4.0",
     "run-sequence": "^1.1.1",
-    "wiredep": "^2.2.2"
+    "wiredep": "^2.2.2",
+    "q": "^1.5.0",
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.8.1",
+    "serve-favicon": "~2.4.2"
   },
   "engines": {
     "node": ">=0.10.0"

@@ -18,6 +18,7 @@ mkdir -pv rpm/{BUILD,RPMS,SOURCES,SPECS}
 mkdir -pv rpm/SOURCES/ockb/app
 
 cp -rf dist/* rpm/SOURCES/ockb/app
+cp -rf server rpm/SOURCES/ockb
 cp -rf bin rpm/SOURCES/ockb
 cp -rf node_modules rpm/SOURCES/ockb
 cp -rf node-v6.9.5-linux-x64 rpm/SOURCES/ockb
