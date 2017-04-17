@@ -71,8 +71,8 @@ var callEsSearchTypeIds = function(query){
                '}';
 
   var options = {
-      host: '103.235.243.213',
-      port: 9200,
+      host: config.elaticsearch.hostname,
+      port: config.elaticsearch.port,
       path: '/occikb/_search',
       method: 'POST',
       headers:{

@@ -9,7 +9,17 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     $scope.treeOptions = {
         nodeChildren: "children",
         dirSelectable: false,
-        allowDeselect: false
+        allowDeselect: false,
+            injectClasses: {
+//                ul: "a1",
+                li: "list-group-item",
+                liSelected: "ockb-custom-selected",
+                iExpanded: "icon expand-icon glyphicon glyphicon-minus",
+                iCollapsed: "icon expand-icon glyphicon glyphicon-plus"
+//                iLeaf: "a5",
+//                label: "a6",
+//                labelSelected: "a8"
+            }
     };
 
 

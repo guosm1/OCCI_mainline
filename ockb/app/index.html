@@ -69,10 +69,10 @@
                 <div class="col-sm-9">
                     <form novalidate class="search-form form-inline">
                         <div class="text-left">
-                            <label class="sr-only" for="home-search">Search the knowledge base</label>
-                            <input ng-model="navctrl.searchContent" type="search" class="form-control input-lg" name="search" id="home-search" size="50" placeholder="Search the knowledge base">
-                            <!--<a href="#!/search/{{ searchContent }}" type="submit" class="btn btn-primary btn-lg">{{ 'index.search' | translate }}</a>-->
-                            <button href=href="javascript:void(0)" ng-click="navctrl.search()" type="submit" class="btn btn-primary btn-lg">{{ 'index.search' | translate }}</button>
+                            <span class="glyphicon glyphicon-search"></span>
+                            <label class="sr-only" for="home-search">{{ 'index.search.label' | translate }}</label>
+                            <input ng-model="navctrl.searchContent" type="search" class="form-control input-lg" name="search" id="home-search" size="65" placeholder="{{ 'index.search.label' | translate }}">
+                            <button href=href="javascript:void(0)" ng-click="navctrl.search()" type="submit" class="btn btn-primary btn-lg">{{ 'index.search.button' | translate }}</button>
                         </div>
                     </form>
                     </br>
