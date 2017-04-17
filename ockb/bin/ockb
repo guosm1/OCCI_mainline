@@ -3,5 +3,4 @@ OCKB_BIN=`dirname $0`
 cd $OCKB_BIN
 export NODEJS=../node-v6.9.5-linux-x64
 export PATH=$NODEJS/bin:$PATH
-#exec ../node_modules/http-server/bin/http-server -p 9000
 exec ../node-v6.9.5-linux-x64/bin/node ./server

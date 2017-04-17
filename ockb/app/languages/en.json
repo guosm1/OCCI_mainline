@@ -1,7 +1,10 @@
 {
     "index": {
         "brand": "OCDP Knowledge Base",
-        "search": "Search",
+        "search": {
+          "label": "Search the knowledge base",
+          "button": "Search"
+        },
         "add": "Create",
         "table": {
             "search": {

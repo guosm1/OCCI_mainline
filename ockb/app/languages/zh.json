@@ -1,7 +1,10 @@
 {
     "index": {
         "brand": "橘云数据操作平台知识库",
-        "search": "查询",
+        "search": {
+            "label": "查询知识库",
+            "button": "查询"
+        },
         "add": "创建",
         "table": {
             "search": {
@@ -13,7 +16,7 @@
         "edit": "编辑",
         "delete": "删除",
         "label": {
-            "id": "唯一标示",
+            "id": "唯一标识",
             "type": "问题所属组件",
             "description": "问题描述",
             "level": "问题级别",
