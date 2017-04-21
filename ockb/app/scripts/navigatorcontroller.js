@@ -95,6 +95,8 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                  });
                  // set the doc types to the service, then other controller can use
                  docTypesFactory._setTypes(tmpTypes);
+                 // set for the create modal, because we set the add controller as navigator controller's child
+                 $scope.addTypesSelectOption = tmpTypes;
 
              }, function(data) {
                  vm.types = {error: 'can not find'};

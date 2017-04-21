@@ -22,7 +22,7 @@ a.brand:active {
   text-decoration: none;
 }
 
-a.create-button {
+button.create-button {
   float: right;
   margin: 7px 120px;
 }
