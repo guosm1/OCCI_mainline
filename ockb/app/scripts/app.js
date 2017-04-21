@@ -3,48 +3,20 @@
 var app = angular.module('ockbApp', ['datatables', 'ngRoute', 'pascalprecht.translate', 'treeControl', 'ockbConfigApp']);
 app.config(function($routeProvider, CONFIG) {
 
-     if (CONFIG.internalUse){
-         $routeProvider
-             .when(
-               '/search/:searchContent', {
-                   templateUrl: 'views/search.html',
-                   controller: searchcontroller})
-             .when(
-               '/detail/:type/:id', {
-                   templateUrl: 'views/detail.html',
-                   controller: detailcontroller})
-             .when(
-               '/add', {
-                   templateUrl: 'views/add.html',
-                   controller: addcontroller})
-             .when(
-               '/edit/:type/:id', {
-                   templateUrl: 'views/edit.html',
-                   controller: editcontroller})
-             .when(
-               '/delete/:type/:id', {
-                   templateUrl: 'views/delete.html',
-                   controller: deletecontroller})
-             .otherwise(
-                {
-                    redirectTo: '/search'
-                });
-     } else {
-         $routeProvider
-             .when(
-               '/search/:searchContent', {
-                   templateUrl: 'views/search.html',
-                   controller: searchcontroller})
-             .when(
-               '/detail/:type/:id', {
-                   templateUrl: 'views/detail.html',
-                   controller: detailcontroller})
-             .otherwise(
-                {
-                    redirectTo: '/search'
-                });
-     }
+     $routeProvider
+         .when(
+           '/search/:searchContent', {
+               templateUrl: 'views/search.html',
+               controller: searchcontroller})
+         .when(
+           '/detail/:type/:id', {
+               templateUrl: 'views/detail.html',
+               controller: detailcontroller})
 
+         .otherwise(
+            {
+                redirectTo: '/search'
+            });
    });
 
 

@@ -1,11 +1,13 @@
 'use strict';
 
-function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFactory, CONFIG) {
+angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $q, $location, docTypesFactory, CONFIG) {
 
-    $scope.addMessages = "";
+    $scope.addFailed = false;
+    $scope.addFailedMessages = "";
+    $scope.addSuccessfully = false;
+    $scope.addSuccessfullyMessages = "";
     $scope.addContentResponse = false;
-    // get the types from navigator types
-    $scope.addTypesSelectOption = docTypesFactory._getTypes();
+    $scope.addContent = {};
 
 
     $scope.getDoc = function() {
@@ -64,14 +66,16 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
                  $scope.checkAddContentFound = data.data.found;
 
                  if ($scope.checkAddContentFound){
-                     $scope.addMessages = "can not create, because the doc is existed!";
+                     $scope.addFailed = false;
+                     $scope.addFailedMessages = "can not create, because the doc is existed!";
 
                  } else {
                       var addPromise = $scope.create();
                       addPromise.then(function(data) {
                                $scope.addMessages = "create successfully!";
                            }, function(data) {
-                               $scope.addMessages = "can not create, please check the input!";
+                               $scope.addFailed = false;
+                               $scope.addFailedMessages = "can not create, please check the input!";
                            }).then(function(){
                                   $location.path('detail/' + $scope.addContent.type + '/' + $scope.addContent.id);
                                   // refresh the whole page after the delete, but it need to enhance partial refresh
@@ -87,4 +91,5 @@ function addcontroller($scope, $http, $routeParams, $q, $location, docTypesFacto
         $location.path("search");
     };
 
-}
+});
+
