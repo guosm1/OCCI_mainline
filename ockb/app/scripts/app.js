@@ -46,6 +46,23 @@ app.factory('docTypesFactory', function() {
 });
 
 
+// define a service for the type and id sync in diff controllers
+// the diff controller is details controller and navigator controller
+app.factory('navDetailFactory', function() {
+    var service = {};
+    var details = {};
+
+    service._setDetails = function(detailsIn){
+        details = detailsIn;
+    };
+    service._getDetails = function() {
+        return details;
+    };
+
+    return service;
+});
+
+
 app.controller('appController', function($scope, CONFIG) {
     $scope.internalUse = CONFIG.internalUse;
 });
