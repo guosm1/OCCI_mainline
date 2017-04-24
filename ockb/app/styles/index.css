@@ -1,25 +1,18 @@
-.brand {
-  font-size: 18px;
-  font-weight: normal;
-  line-height: 32px;
-  margin-left: 0;
-  padding: 2px 5px 0 10px;
+.header {
+    margin-bottom: 30px;
 }
 
-a.brand:link {
-  text-decoration: none;
+.navbar-header .brand {
+  color: #ffffff;
+  font-size: 16px;
+  text-shadow: 0 1px 0 #555555;
 }
 
-a.brand:visited {
-  text-decoration: none;
-}
-
-a.brand:hover {
-  text-decoration: none;
-}
-
-a.brand:active {
-  text-decoration: none;
+.navbar-oc {
+  background-image: -webkit-linear-gradient(top, #555555, #333333);
+  background-image: linear-gradient(to bottom, #555555, #333333);
+  height: 40px;
+  margin-bottom: 0px;
 }
 
 button.create-button {

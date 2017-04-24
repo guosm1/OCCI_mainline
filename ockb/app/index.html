@@ -36,17 +36,16 @@
         <!-- endbuild -->
     </head>
     <body>
-        <div>
-            <nav class="navbar navbar-default">
+        <div class="header">
+            <nav class="navbar navbar-oc">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a>
-                            <img src="/images/logo-white.png">
-                        </a>
-                        <a class="brand">
-                            <span>{{ 'index.brand' | translate }}</span>
-                        </a>
+                      <div style="margin-top: 8px;">
+                        <img src="/images/logo-white.png" style="height: 32px;" alt="ockb" title="ockb">
+                        <span class="brand ng-binding">{{ 'index.brand' | translate }}</span>
+                      </div>
                     </div>
+
                     <div ng-show="internalUse">
                         <!-- Button trigger create modal -->
                         <button type="button" class="btn btn-default create-button" data-toggle="modal" data-backdrop="static" data-target="#createModal">
