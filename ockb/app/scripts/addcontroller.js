@@ -9,6 +9,38 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
     $scope.addContentResponse = false;
     $scope.addContent = {};
 
+    $scope.reasons = [{key: 0, value: ""}];
+    $scope.steps = [{key: 0, value: ""}];
+
+
+    $scope.incReason = function($index) {
+          $scope.reasons.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
+    }
+
+
+    $scope.rmvReason = function($index) {
+          $scope.reasons.splice($index, 1);
+    }
+
+
+    $scope.incStep = function($index) {
+          $scope.steps.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
+    }
+
+
+    $scope.rmvStep = function($index) {
+          $scope.steps.splice($index, 1);
+    }
+
+
+    $scope.formatListToEs = function(array) {
+          var formatted = [];
+          angular.forEach(array, function(obj, key) {
+              formatted.push(obj.value);
+          });
+          return formatted;
+    }
+
 
     $scope.getDoc = function() {
 
@@ -29,6 +61,8 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
 
 
     $scope.create = function() {
+        var possible_cause = $scope.formatListToEs($scope.reasons);
+        var processing_step = $scope.formatListToEs($scope.steps);
 
         var defered = $q.defer();
 
@@ -39,8 +73,8 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
                             "explanation": $scope.addContent.explanation,
                             "level": $scope.addContent.level,
                             "impact": $scope.addContent.impact,
-                            "possible_cause": $scope.addContent.possible_cause.slice(1,-1).split(","),
-                            "processing_step": $scope.addContent.processing_step.slice(1,-1).split(","),
+                            "possible_cause": possible_cause,
+                            "processing_step": processing_step,
                             "reference": $scope.addContent.reference,
                        };
          $http({
@@ -86,6 +120,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
                  $scope.addContentFound = data;
              });
     };
+
 
     $scope.cancelAddContent = function() {
         $location.path("search");

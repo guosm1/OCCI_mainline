@@ -13,6 +13,28 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, docTypesFac
     $scope.type = $routeParams.type;
     $scope.id = $routeParams.id;
 
+
+    $scope.incReason = function($index) {
+          $scope.reasons.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
+    }
+
+
+    $scope.rmvReason = function($index) {
+          $scope.reasons.splice($index, 1);
+    }
+
+
+    $scope.incStep = function($index) {
+          $scope.steps.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
+    }
+
+
+    $scope.rmvStep = function($index) {
+          $scope.steps.splice($index, 1);
+    }
+
+
+
     $scope.list = function() {
 
         var defered = $q.defer();
@@ -30,6 +52,8 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, docTypesFac
 
 
     $scope.setEditContent = function(data) {
+             $scope.reasons = [];
+             $scope.steps = [];
              $scope.editContent = {};
              $scope.editContent.id = data.data._source.id;
              $scope.editContent.type = data.data._source.type;
@@ -40,18 +64,15 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, docTypesFac
              $scope.editContent.reference = data.data._source.reference;
 
 
-             $scope.editContent.possible_cause = '';
+
              angular.forEach(data.data._source.possible_cause, function(value) {
-                $scope.editContent.possible_cause = $scope.editContent.possible_cause + '"' + value.toString() + '",';
+                  $scope.reasons.push({key: new Date().getTime(), value: value});
              });
-             $scope.editContent.possible_cause = '[' + $scope.editContent.possible_cause.slice(0, -1) + ']';
 
 
-             $scope.editContent.processing_step = '';
              angular.forEach(data.data._source.processing_step, function(value) {
-                $scope.editContent.processing_step = $scope.editContent.processing_step + '"' + value.toString() + '",';
+                  $scope.steps.push({key: new Date().getTime(), value: value});
              });
-             $scope.editContent.processing_step = '[' + $scope.editContent.processing_step.slice(0, -1) + ']';
     }
 
 
@@ -87,7 +108,18 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, docTypesFac
     }, 500);
 
 
+    $scope.formatListToEs = function(array) {
+          var formatted = [];
+          angular.forEach(array, function(obj, key) {
+              formatted.push(obj.value);
+          });
+          return formatted;
+    }
+
+
     $scope.update = function() {
+        var possible_cause = $scope.formatListToEs($scope.reasons);
+        var processing_step = $scope.formatListToEs($scope.steps);
 
         var defered = $q.defer();
 
@@ -98,8 +130,8 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, docTypesFac
                             "explanation": $scope.editContent.explanation,
                             "level": $scope.editContent.level,
                             "impact": $scope.editContent.impact,
-                            "possible_cause": $scope.editContent.possible_cause.slice(1,-1).split(","),
-                            "processing_step": $scope.editContent.processing_step.slice(1,-1).split(","),
+                            "possible_cause": possible_cause,
+                            "processing_step": processing_step,
                             "reference": $scope.editContent.reference,
                        };
          $http({
