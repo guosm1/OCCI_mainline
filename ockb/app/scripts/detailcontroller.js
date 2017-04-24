@@ -1,6 +1,6 @@
 'use strict';
 
-function detailcontroller($scope, $http, $routeParams, $q, $timeout, docTypesFactory, CONFIG) {
+function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navDetailFactory, CONFIG) {
 
     $scope.internalUse = CONFIG.internalUse;
     $scope.editTypesSelectOption = docTypesFactory._getTypes();
@@ -12,6 +12,12 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, docTypesFac
     // set the type and id into the details scope
     $scope.type = $routeParams.type;
     $scope.id = $routeParams.id;
+
+    // set the type and id to the nav and details services
+    navDetailFactory._setDetails({
+        "type": $scope.type,
+        "id": $scope.id
+    });
 
 
     $scope.incReason = function($index) {
@@ -84,28 +90,6 @@ function detailcontroller($scope, $http, $routeParams, $q, $timeout, docTypesFac
          }, function(data) {
              $scope.detail = {error: 'can not find'};
     });
-
-
-    $timeout(function () {
-         var treecontrol = angular.element("treecontrol");
-         var firstChildNode = treecontrol.find("#" + $scope.type + '_' + $scope.type);
-         var secondChildNode = treecontrol.find("#" + $scope.type + '_' + $scope.id);
-
-         if (secondChildNode.length === 0) {
-             $timeout(function () {
-                 firstChildNode.trigger('click');
-             }, 100);
-
-             $timeout(function () {
-                 // find again becase first node just expanded
-                 treecontrol.find("#" + $scope.type + '_' + $scope.id).trigger('click');
-             }, 100);
-         } else {
-             $timeout(function () {
-                 secondChildNode.trigger('click');
-             }, 100);
-         }
-    }, 500);
 
 
     $scope.formatListToEs = function(array) {

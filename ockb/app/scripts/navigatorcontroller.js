@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, $location, docTypesFactory, CONFIG) {
+angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, $location, $timeout, docTypesFactory, navDetailFactory, CONFIG) {
 
     var vm = this;
 
@@ -117,6 +117,29 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     vm.search = function() {
         $location.path('search/'+ vm.searchContent);
     };
+
+
+    $timeout(function () {
+         var typeAndId = navDetailFactory._getDetails();
+         var treecontrol = angular.element("treecontrol");
+         var firstChildNode = treecontrol.find("#" + typeAndId.type + '_' + typeAndId.type);
+         var secondChildNode = treecontrol.find("#" + typeAndId.type + '_' + typeAndId.id);
+
+         if (secondChildNode.length === 0) {
+             $timeout(function () {
+                 firstChildNode.trigger('click');
+             }, 100);
+
+             $timeout(function () {
+                 // find again because first node just expanded
+                 treecontrol.find("#" + typeAndId.type + '_' + typeAndId.id).trigger('click');
+             }, 100);
+         } else {
+             $timeout(function () {
+                 secondChildNode.trigger('click');
+             }, 100);
+         }
+    }, 500);
 
 
 });
