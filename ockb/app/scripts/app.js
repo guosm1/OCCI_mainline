@@ -63,6 +63,11 @@ app.factory('navDetailFactory', function() {
 });
 
 
-app.controller('appController', function($scope, CONFIG) {
+app.controller('appController', function($scope, $location, CONFIG) {
     $scope.internalUse = CONFIG.internalUse;
+
+    $scope.refresh = function(){
+        $location.path("search");
+        window.location.reload();
+    }
 });
