@@ -12,6 +12,19 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
     $scope.reasons = [{key: 0, value: ""}];
     $scope.steps = [{key: 0, value: ""}];
 
+    $scope.tags = [];
+
+
+    $scope.loadTags = function(query) {
+      return $scope.tagsSearch;
+    };
+
+
+    // only permit the one tag
+    $scope.forceOneTag = function(tags) {
+        return (tags.length === 0);
+    }
+
 
     $scope.incReason = function($index) {
           $scope.reasons.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
@@ -63,12 +76,14 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
     $scope.create = function() {
         var possible_cause = $scope.formatListToEs($scope.reasons);
         var processing_step = $scope.formatListToEs($scope.steps);
+        // because we only allow 1 component in this field, only get the first index 0 data
+        var type = $scope.tags[0].text;
 
         var defered = $q.defer();
 
         var addBody = {
                             "id": $scope.addContent.id,
-                            "type": $scope.addContent.type,
+                            "type": type,
                             "description": $scope.addContent.description,
                             "explanation": $scope.addContent.explanation,
                             "level": $scope.addContent.level,

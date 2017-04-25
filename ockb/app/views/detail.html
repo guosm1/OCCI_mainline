@@ -89,12 +89,18 @@
               <input ng-disabled="true" ng-model="editContent.id" class="form-control"></input>
             </div>
           </div>
+
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ 'detail.label.type' | translate }}</label>
             <div class="col-sm-9">
-              <select ng-model="editContent.type" class="form-control">
-                <option ng-repeat="x in editTypesSelectOption">{{ x }}</option>
-              </select>
+              <tags-input
+                ng-model="editTags"
+                on-tag-adding="forceOneTag(editTags)"
+                min-length="1"
+                placeholder="input a component"
+                add-on-paste="true">
+                <auto-complete min-length="2" source="loadTags($query)"></auto-complete>
+              </tags-input>
             </div>
           </div>
           <div class="form-group">

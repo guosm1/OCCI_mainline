@@ -20,6 +20,24 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
     });
 
 
+    $scope.editTags = [];
+
+    $scope.editTagsSearch = [];
+    angular.forEach($scope.editTypesSelectOption, function(value, key) {
+        $scope.editTagsSearch.push({ "text": value });
+    });
+
+    $scope.loadTags = function(query) {
+      return $scope.editTagsSearch;
+    };
+
+
+    // only permit the one tag
+    $scope.forceOneTag = function(tags) {
+        return (tags.length === 0);
+    }
+
+
     $scope.incReason = function($index) {
           $scope.reasons.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
     }
@@ -62,14 +80,14 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
              $scope.steps = [];
              $scope.editContent = {};
              $scope.editContent.id = data.data._source.id;
-             $scope.editContent.type = data.data._source.type;
+
              $scope.editContent.description = data.data._source.description;
              $scope.editContent.explanation = data.data._source.explanation;
              $scope.editContent.level = data.data._source.level;
              $scope.editContent.impact = data.data._source.impact;
              $scope.editContent.reference = data.data._source.reference;
 
-
+             $scope.editTags.push({ "text": data.data._source.type });
 
              angular.forEach(data.data._source.possible_cause, function(value) {
                   $scope.reasons.push({key: new Date().getTime(), value: value});
@@ -104,12 +122,14 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
     $scope.update = function() {
         var possible_cause = $scope.formatListToEs($scope.reasons);
         var processing_step = $scope.formatListToEs($scope.steps);
+        // because we only allow 1 component in this field, only get the first index 0 data
+        var type = $scope.editTags[0].text;
 
         var defered = $q.defer();
 
         var editBody = {
                             "id": $scope.editContent.id,
-                            "type": $scope.editContent.type,
+                            "type": type,
                             "description": $scope.editContent.description,
                             "explanation": $scope.editContent.explanation,
                             "level": $scope.editContent.level,
