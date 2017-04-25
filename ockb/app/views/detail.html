@@ -57,14 +57,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="deleteModalLabel">Delete Content</h4>
+        <h4 class="modal-title" id="deleteModalLabel">{{ 'delete.delete.knowledge' | translate }}</h4>
       </div>
       <div class="modal-body">
-          Do you want to delete the content?
+          {{ 'delete.delete.confirm' | translate }}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button ng-click="deleteContent()" type="button" class="btn btn-primary">Delete</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'delete.button.cancel' | translate }}</button>
+        <button ng-click="deleteContent()" type="button" class="btn btn-primary">{{ 'delete.button.delete' | translate }}</button>
       </div>
     </div>
   </div>
@@ -78,7 +78,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="editModalLabel">Edit Content</h4>
+        <h4 class="modal-title" id="editModalLabel">{{ 'edit.edit.knowledge' | translate }}</h4>
       </div>
       <div class="modal-body">
 
@@ -97,7 +97,7 @@
                 ng-model="editTags"
                 on-tag-adding="forceOneTag(editTags)"
                 min-length="1"
-                placeholder="input a component"
+                placeholder=" "
                 add-on-paste="true">
                 <auto-complete min-length="2" source="loadTags($query)"></auto-complete>
               </tags-input>

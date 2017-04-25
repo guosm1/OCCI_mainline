@@ -29,10 +29,26 @@
     },
     "add": {
         "save": "保存",
-        "cancel": "取消"
+        "cancel": "取消",
+        "create": {
+            "knowledge": "创建知识"
+        }
     },
     "edit": {
         "save": "保存",
-        "cancel": "取消"
+        "cancel": "取消",
+        "edit": {
+          "knowledge": "编辑知识"
+        }
+    },
+    "delete": {
+        "button": {
+            "delete": "删除",
+            "cancel": "取消"
+        },
+        "delete": {
+            "knowledge": "删除知识",
+            "confirm": "确定删除知识？"
+        }
     }
 }
