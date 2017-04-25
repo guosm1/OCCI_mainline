@@ -14,6 +14,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
 
     $scope.tags = [];
 
+    $scope.addLevels = CONFIG.levels;
 
     $scope.loadTags = function(query) {
       return $scope.tagsSearch;

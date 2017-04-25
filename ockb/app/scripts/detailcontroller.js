@@ -22,6 +22,8 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
 
     $scope.editTags = [];
 
+    $scope.editLevels = CONFIG.levels;
+
     $scope.editTagsSearch = [];
     angular.forEach($scope.editTypesSelectOption, function(value, key) {
         $scope.editTagsSearch.push({ "text": value });

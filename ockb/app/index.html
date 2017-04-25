@@ -136,7 +136,9 @@
                       <div class="form-group">
                         <label class="col-sm-2 control-label">{{ 'detail.label.level' | translate }}</label>
                         <div class="col-sm-9">
-                          <input ng-model="addContent.level" class="form-control"></input>
+                          <select ng-model="addContent.level" class="form-control">
+                            <option ng-repeat="x in addLevels">{{ x }}</option>
+                          </select>
                         </div>
                       </div>
                       <div class="form-group">
