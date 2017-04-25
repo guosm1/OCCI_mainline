@@ -13,17 +13,20 @@
         <script src="bower_components/angular-tree-control/angular-tree-control.js"></script>
         <script src="bower_components/bootstrap/js/modal.js"></script>
         <script src="bower_components/bootstrap/js/alert.js"></script>
+        <script src="bower_components/ng-tags-input/ng-tags-input.js"></script>
         <!-- endbuild -->
 
         <!-- build:css(.) styles/vendor.css -->
         <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
         <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.css">
         <link rel="stylesheet" href="bower_components/angular-tree-control/css/tree-control.css">
+        <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.bootstrap.css">
         <!-- endbuild -->
 
         <!-- build:css(app) styles/index.css -->
         <link rel="stylesheet" href="styles/index.css">
         <link rel="stylesheet" href="styles/highlight.css">
+        <link rel="stylesheet" href="styles/ng-tags.css">
         <!-- endbuild -->
         <script src="conf/config.js"></script>
         <!-- build:js(app) scripts/scripts.js -->
@@ -91,7 +94,9 @@
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
                     <h4 class="modal-title" id="createModalLabel">Create Content</h4>
                   </div>
                   <div class="modal-body">
@@ -112,9 +117,14 @@
                       <div class="form-group">
                         <label class="col-sm-2 control-label">{{ 'detail.label.type' | translate }}</label>
                         <div class="col-sm-9">
-                          <select ng-model="addContent.type" class="form-control">
-                            <option ng-repeat="x in addTypesSelectOption">{{ x }}</option>
-                          </select>
+                          <tags-input
+                              ng-model="tags"
+                              on-tag-adding="forceOneTag(tags)"
+                              min-length="1"
+                              placeholder="input a component"
+                              add-on-paste="true">
+                            <auto-complete min-length="2" source="loadTags($query)"></auto-complete>
+                          </tags-input>
                         </div>
                       </div>
                       <div class="form-group">
