@@ -8,6 +8,22 @@
   text-shadow: 0 1px 0 #555555;
 }
 
+.navbar-header a:link {
+  text-decoration: none;
+}
+
+.navbar-header avisited {
+  text-decoration: none;
+}
+
+.navbar-header a:hover {
+  text-decoration: none;
+}
+
+.navbar-header a.active {
+  text-decoration: none;
+}
+
 .navbar-oc {
   background-image: -webkit-linear-gradient(top, #555555, #333333);
   background-image: linear-gradient(to bottom, #555555, #333333);
