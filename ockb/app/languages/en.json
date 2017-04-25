@@ -29,11 +29,26 @@
     },
     "add": {
         "save": "Save",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "create": {
+            "knowledge": "Create Knowledge"
         }
     },
     "edit": {
         "save": "Save",
+        "cancel": "Cancel",
+        "edit": {
+          "knowledge": "Edit Knowledge"
+        }
+    },
+    "delete": {
+      "button": {
+        "delete": "Delete",
         "cancel": "Cancel"
+      },
+      "delete": {
+        "knowledge": "Delete Knowledge",
+        "confirm": "Do you want to delete the content?"
+      }
     }
 }
