@@ -21,6 +21,21 @@
           "regex": "\\w*:(\\d+)",
           "site": "kibana-site"
         }
+      },
+      {
+        "name": "OCKB",
+        "label": "Knowledge Base",
+        "requires_user_name": "false",
+        "component_name": "OCKB_SERVER",
+        "url":"%@://%@:%@/",
+        "port": {
+          "http_property": "server.port",
+          "http_default_port": "3000",
+          "https_property": "server.port",
+          "https_default_port": "3000",
+          "regex": "\\w*:(\\d+)",
+          "site": "ockb-site"
+        }
       }
     ]
   }

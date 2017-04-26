@@ -36,7 +36,7 @@
     </property>
     <property>
         <name>server.port</name>
-        <value>9000</value>
+        <value>3000</value>
         <description>Knowledge Base Server Port</description>
         <value-attributes>
             <type>int</type>

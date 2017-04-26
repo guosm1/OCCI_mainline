@@ -53,7 +53,7 @@
         <component>
           <name>OCKB_SERVER</name>
           <displayName>Knowledge Base Server</displayName>
-          <category>SLAVE</category>
+          <category>MASTER</category>
           <cardinality>1</cardinality>
           <versionAdvertised>true</versionAdvertised>
           <commandScript>
