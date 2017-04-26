@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ockbApp').controller('deletecontroller', function ($scope, $http, $q, $location, docTypesFactory, CONFIG) {
+angular.module('ockbApp').controller('deletecontroller', function ($scope, $http, $q, $location, $timeout, docTypesFactory, CONFIG) {
 
     $scope.deleteDoc = function() {
 
@@ -26,9 +26,12 @@ angular.module('ockbApp').controller('deletecontroller', function ($scope, $http
 
        promise.then(function(data) {
                 $scope.deleteMessages = "delete successfully!";
-                $location.path("search");
-                // refresh the whole page after the delete, but it need to enhance partial refresh
-                window.location.reload();
+                // wait for 500 mills to refresh to make sure the server delete the data successfully
+                $timeout(function () {
+                    $location.path("search");
+                    // refresh the whole page after the delete, but it need to enhance partial refresh
+                    window.location.reload();
+                }, 500);
             }, function(data) {
                 $scope.deleteMessages = "can not delete, please contact the admin!";
             });

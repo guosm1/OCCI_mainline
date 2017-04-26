@@ -67,3 +67,7 @@ treecontrol.tree-light li.tree-collapsed i.tree-branch-head {
 treecontrol.tree-light li.tree-leaf {
   border: 0px
 }
+
+.ockb-warning {
+  margin-left: 20px;
+}

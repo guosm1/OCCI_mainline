@@ -1,6 +1,8 @@
 {
     "index": {
         "brand": "橘云数据操作平台知识库",
+        "warning": "警告：",
+        "warningContent": "知识库中没有内容，请创建或倒入知识。",
         "search": {
             "label": "查询知识库",
             "button": "查询"
