@@ -58,6 +58,17 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     };
 
 
+     vm.sortById = function(a, b){
+        if(a.id < b.id){
+              return -1;
+          }else if(a.id > b.id){
+              return 1;
+          }else{
+              return 0;
+          }
+     }
+
+
     vm.initialTree = function(){
         var promise = vm.get_type();
 
@@ -65,21 +76,16 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                  vm.types = data.data.occikb.mappings;
                  var tmpTypes = [];
 
-                 // get the types
                  angular.forEach(vm.types, function(value, key) {
                     tmpTypes.push(key);
-                 });
-                 // sort the types, then the nav tree will have sequence
-                 tmpTypes.sort();
 
-                 angular.forEach(tmpTypes, function(value) {
-                    var get_id_promise = vm.get_ids(value);
+                    var get_id_promise = vm.get_ids(key);
                     get_id_promise.then(function(data) {
 
                              var item = {
-                                "id": value,
-                                "type": value,
-                                "description": value,
+                                "id": key,
+                                "type": key,
+                                "description": key,
                                 "children": []
                              };
                              angular.forEach(data, function(value) {
@@ -91,7 +97,8 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                                 item.children.push(tmp);
                              });
                              $scope.dataForTheTree.push(item);
-
+                             // sort the nav tree types
+                             $scope.dataForTheTree.sort(vm.sortById);
 
                          }, function(data) {
                              vm.header_titles = [];
