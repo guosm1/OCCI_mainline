@@ -64,17 +64,22 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
         promise.then(function(data) {
                  vm.types = data.data.occikb.mappings;
                  var tmpTypes = [];
+
+                 // get the types
                  angular.forEach(vm.types, function(value, key) {
                     tmpTypes.push(key);
+                 });
+                 // sort the types, then the nav tree will have sequence
+                 tmpTypes.sort();
 
-
-                    var get_id_promise = vm.get_ids(key);
+                 angular.forEach(tmpTypes, function(value) {
+                    var get_id_promise = vm.get_ids(value);
                     get_id_promise.then(function(data) {
 
                              var item = {
-                                "id": key,
-                                "type": key,
-                                "description": key,
+                                "id": value,
+                                "type": value,
+                                "description": value,
                                 "children": []
                              };
                              angular.forEach(data, function(value) {
