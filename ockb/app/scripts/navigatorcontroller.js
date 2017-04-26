@@ -3,6 +3,7 @@
 angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $http, $q, $location, $timeout, docTypesFactory, navDetailFactory, CONFIG) {
 
     var vm = this;
+    vm.isOCKBEmpty = false;
 
     $scope.dataForTheTree = [];
     // tree options
@@ -73,46 +74,49 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
         var promise = vm.get_type();
 
         promise.then(function(data) {
-                 vm.types = data.data.occikb.mappings;
-                 var tmpTypes = [];
+                 if(data.data.status !== 404){
+                     vm.types = data.data.occikb.mappings;
+                     var tmpTypes = [];
 
-                 angular.forEach(vm.types, function(value, key) {
-                    tmpTypes.push(key);
+                     angular.forEach(vm.types, function(value, key) {
+                        tmpTypes.push(key);
 
-                    var get_id_promise = vm.get_ids(key);
-                    get_id_promise.then(function(data) {
+                        var get_id_promise = vm.get_ids(key);
+                        get_id_promise.then(function(data) {
 
-                             var item = {
-                                "id": key,
-                                "type": key,
-                                "description": key,
-                                "children": []
-                             };
-                             angular.forEach(data, function(value) {
-                                var tmp = value._source;
-                                tmp.children = [];
-                                tmp.id = value._source.id;
-                                tmp.type = value._source.type;
-                                tmp.description = value._source.description;
-                                item.children.push(tmp);
+                                 var item = {
+                                    "id": key,
+                                    "type": key,
+                                    "description": key,
+                                    "children": []
+                                 };
+                                 angular.forEach(data, function(value) {
+                                    var tmp = value._source;
+                                    tmp.children = [];
+                                    tmp.id = value._source.id;
+                                    tmp.type = value._source.type;
+                                    tmp.description = value._source.description;
+                                    item.children.push(tmp);
+                                 });
+                                 $scope.dataForTheTree.push(item);
+                                 // sort the nav tree types
+                                 $scope.dataForTheTree.sort(vm.sortById);
+
+                             }, function(data) {
+                                 vm.header_titles = [];
+                                 console.log("Error when get the ids!");
                              });
-                             $scope.dataForTheTree.push(item);
-                             // sort the nav tree types
-                             $scope.dataForTheTree.sort(vm.sortById);
-
-                         }, function(data) {
-                             vm.header_titles = [];
-                             console.log("Error when get the ids!");
-                         });
-                 });
-                 // set the doc types to the service, then other controller can use
-                 docTypesFactory._setTypes(tmpTypes);
-                 // set for the create modal, because we set the add controller as navigator controller's child
-                 $scope.tagsSearch = [];
-                 angular.forEach(tmpTypes, function(value, key) {
-                      $scope.tagsSearch.push({ "text": value });
-                 });
-
+                     });
+                     // set the doc types to the service, then other controller can use
+                     docTypesFactory._setTypes(tmpTypes);
+                     // set for the create modal, because we set the add controller as navigator controller's child
+                     $scope.tagsSearch = [];
+                     angular.forEach(tmpTypes, function(value, key) {
+                          $scope.tagsSearch.push({ "text": value });
+                     });
+                 } else {
+                     vm.isOCKBEmpty = true;
+                 }
              }, function(data) {
                  vm.types = {error: 'can not find'};
         });

@@ -83,6 +83,13 @@
                             <button href=href="javascript:void(0)" ng-click="navctrl.search()" type="submit" class="btn btn-primary btn-lg">{{ 'index.search.button' | translate }}</button>
                         </div>
                     </form>
+                    <div ng-show="navctrl.isOCKBEmpty" class="ockb-warning">
+                      </br>
+                      <div class="alert alert-warning">
+                        <a class="close" data-dismiss="alert">&times;</a>
+                        <strong>{{ 'index.warning' | translate }}</strong>{{ 'index.warningContent' | translate }}
+                      </div>
+                    </div>
                     </br>
                     <div ng-view></div>
                 </div>

@@ -1,6 +1,8 @@
 {
     "index": {
         "brand": "OCDP Knowledge Base",
+        "warning": "WARNING：",
+        "warningContent": "There is not knowledge in the knowledge base, please create or import the knowledge.",
         "search": {
           "label": "Search the knowledge base",
           "button": "Search"

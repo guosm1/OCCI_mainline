@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $q, $location, docTypesFactory, CONFIG) {
+angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $q, $location, $timeout, docTypesFactory, CONFIG) {
 
     $scope.addFailed = false;
     $scope.addFailedMessages = "";
@@ -58,9 +58,11 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
 
     $scope.getDoc = function() {
 
+        // because we only allow 1 component in this field, only get the first index 0 data
+        var type = $scope.tags[0].text;
         var defered = $q.defer();
 
-        var url = '/api/details/' + $scope.addContent.type + '/' + $scope.addContent.id;
+        var url = '/api/details/' + type + '/' + $scope.addContent.id;
         $http({
                 url: url,
                 method: 'GET'
@@ -127,9 +129,13 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
                                $scope.addFailed = false;
                                $scope.addFailedMessages = "can not create, please check the input!";
                            }).then(function(){
-                                  $location.path('detail/' + $scope.addContent.type + '/' + $scope.addContent.id);
-                                  // refresh the whole page after the delete, but it need to enhance partial refresh
-                                  window.location.reload();
+                                  // because we only allow 1 component in this field, only get the first index 0 data
+                                  var type = $scope.tags[0].text;
+                                  $timeout(function () {
+                                      $location.path('detail/' + type + '/' + $scope.addContent.id);
+                                      // refresh the whole page after the create to load the nav tree again
+                                      window.location.reload();
+                                  }, 500);
                            });
                  }
              }, function(data) {
