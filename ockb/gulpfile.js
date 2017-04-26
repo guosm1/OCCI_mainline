@@ -228,7 +228,7 @@ gulp.task('copy:extras', function () {
 });
 
 gulp.task('copy:fonts', function () {
-  return gulp.src(yeoman.app + '/fonts/**/*')
+  return gulp.src(yeoman.app + '/bower_components/bootstrap/fonts/**/*')
     .pipe(gulp.dest(yeoman.dist + '/fonts'));
 });
 
