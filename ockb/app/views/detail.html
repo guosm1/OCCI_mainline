@@ -31,7 +31,7 @@
         <label class="col-sm-2">{{ 'detail.label.reason' | translate }}</label>
         <div class="col-sm-10">
             <p ng-repeat="(drKey, drVal) in detail._source.possible_cause">
-                {{ drKey + 1 }}. {{ drVal }}
+                <strong>{{ drKey + 1 }}. </strong>{{ drVal }}
             </p>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <label class="col-sm-2">{{ 'detail.label.steps' | translate }}</label>
         <div class="col-sm-10">
             <p ng-repeat="(dsKey, dsVal) in detail._source.processing_step">
-                {{ dsKey + 1 }}. {{ dsVal }}
+                <strong>{{ dsKey + 1 }}. </strong>{{ dsVal }}
             </p>
         </div>
     </div>
