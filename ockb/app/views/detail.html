@@ -82,7 +82,7 @@
       </div>
       <div class="modal-body">
 
-        <form novalidate class="form-horizontal">
+        <form name="editKBForm" novalidate class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-2 control-label">{{ 'detail.label.id' | translate }}</label>
             <div class="col-sm-9">
@@ -96,11 +96,16 @@
               <tags-input
                 ng-model="editTags"
                 on-tag-adding="forceOneTag(editTags)"
+                on-tag-removed="removedTag()"
+                on-tag-added="addedTag()"
                 min-length="1"
+                min-tags="1"
+                max-tags="1"
                 placeholder=" "
                 add-on-paste="true">
                 <auto-complete min-length="2" source="loadTags($query)"></auto-complete>
               </tags-input>
+              <span style="color:red" ng-show="isEditContentTypeEmpty">{{ 'edit.validation.type' | translate }}</span>
             </div>
           </div>
           <div class="form-group">
@@ -194,7 +199,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'edit.cancel' | translate }}</button>
-        <button ng-click="saveEditContent()" type="button" class="btn btn-primary">{{ 'edit.save' | translate }}</button>
+        <button ng-click="saveEditContent()" type="button" ng-disabled="editKBForm.$invalid" class="btn btn-primary">{{ 'edit.save' | translate }}</button>
       </div>
     </div>
   </div>

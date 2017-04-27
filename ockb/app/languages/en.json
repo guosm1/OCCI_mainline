@@ -34,6 +34,10 @@
         "cancel": "Cancel",
         "create": {
             "knowledge": "Create Knowledge"
+        },
+        "validation": {
+          "id": "Please input the knowledge id.",
+          "type": "Please input or select the component name(the tag only can set 1)."
         }
     },
     "edit": {
@@ -41,6 +45,9 @@
         "cancel": "Cancel",
         "edit": {
           "knowledge": "Edit Knowledge"
+        },
+        "validation": {
+          "type": "Please input or select the component name(the tag only can set 1)."
         }
     },
     "delete": {

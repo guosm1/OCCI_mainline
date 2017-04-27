@@ -70,7 +70,7 @@
                                  node-children="children"
                                  on-selection="showSelected(node)"
                                  selected-node="node">
-                        <span id="{{node.type}}_{{node.id}}">{{node.description}}</span>
+                        <span id="{{node.type}}_{{node.id}}">{{node.id}} {{node.description}}</span>
                     </treecontrol>
                     </div>
                 </div>
@@ -114,11 +114,14 @@
                       <strong>Failed: </strong>{{ editFailedMessages }}
                     </div>
 
-                    <form novalidate class="form-horizontal">
+                    <form name="createKBForm" novalidate class="form-horizontal">
                       <div class="form-group">
                         <label class="col-sm-2 control-label">{{ 'detail.label.id' | translate }}</label>
-                        <div class="col-sm-9">
-                          <input ng-model="addContent.id" class="form-control"></input>
+                        <div ng-class="{ 'ockb-has-error': createKBForm.createContentId.$dirty && createKBForm.createContentId.$invalid || createKBForm.createContentId.$pristine}" class="col-sm-9">
+                          <input name="createContentId" ng-model="createContentId" class="form-control" required></input>
+                          <span style="color:red" ng-show="createKBForm.createContentId.$dirty && createKBForm.createContentId.$invalid">
+                            <span ng-show="createKBForm.createContentId.$error.required">{{ 'add.validation.id' | translate }}</span>
+                          </span>
                         </div>
                       </div>
                       <div class="form-group">
@@ -127,12 +130,18 @@
                           <tags-input
                               ng-model="tags"
                               on-tag-adding="forceOneTag(tags)"
+                              on-tag-removed="removedTag()"
+                              on-tag-added="addedTag()"
                               min-length="1"
+                              min-tags="1"
+                              max-tags="1"
                               placeholder=" "
                               add-on-paste="true">
                             <auto-complete min-length="2" source="loadTags($query)"></auto-complete>
                           </tags-input>
+                          <span style="color:red" ng-show="isCreateContentTypeEmpty">{{ 'add.validation.type' | translate }}</span>
                         </div>
+
                       </div>
                       <div class="form-group">
                         <label class="col-sm-2 control-label">{{ 'detail.label.description' | translate }}</label>
@@ -225,7 +234,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'add.cancel' | translate }}</button>
-                    <button ng-click="saveAddContent()" type="button" class="btn btn-primary">{{ 'add.save' | translate }}</button>
+                    <button ng-click="saveAddContent()" type="button" ng-disabled="createKBForm.$invalid" class="btn btn-primary">{{ 'add.save' | translate }}</button>
                   </div>
                 </div>
               </div>

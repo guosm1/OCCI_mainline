@@ -9,6 +9,9 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
     $scope.addContentResponse = false;
     $scope.addContent = {};
 
+    $scope.createContentId = "";
+    $scope.isCreateContentTypeEmpty = false;
+
     $scope.reasons = [{key: 0, value: ""}];
     $scope.steps = [{key: 0, value: ""}];
 
@@ -24,6 +27,18 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
     // only permit the one tag
     $scope.forceOneTag = function(tags) {
         return (tags.length === 0);
+    }
+
+
+    // remove tag will invoke this function
+    $scope.removedTag = function() {
+        $scope.isCreateContentTypeEmpty = true;
+    }
+
+
+    // add tag will invoke this function
+    $scope.addedTag = function() {
+        $scope.isCreateContentTypeEmpty = false;
     }
 
 
@@ -62,7 +77,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
         var type = $scope.tags[0].text;
         var defered = $q.defer();
 
-        var url = '/api/details/' + type + '/' + $scope.addContent.id;
+        var url = '/api/details/' + type + '/' + $scope.createContentId;
         $http({
                 url: url,
                 method: 'GET'
@@ -85,7 +100,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
         var defered = $q.defer();
 
         var addBody = {
-                            "id": $scope.addContent.id,
+                            "id": $scope.createContentId,
                             "type": type,
                             "description": $scope.addContent.description,
                             "explanation": $scope.addContent.explanation,
@@ -106,8 +121,6 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
               });
           return defered.promise;
     };
-
-
 
 
     $scope.saveAddContent = function() {
@@ -132,7 +145,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
                                   // because we only allow 1 component in this field, only get the first index 0 data
                                   var type = $scope.tags[0].text;
                                   $timeout(function () {
-                                      $location.path('detail/' + type + '/' + $scope.addContent.id);
+                                      $location.path('detail/' + type + '/' + $scope.createContentId);
                                       // refresh the whole page after the create to load the nav tree again
                                       window.location.reload();
                                   }, 500);

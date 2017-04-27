@@ -71,3 +71,12 @@ treecontrol.tree-light li.tree-leaf {
 .ockb-warning {
   margin-left: 20px;
 }
+
+
+.ockb-has-error .form-control {
+    -webkit-box-shadow: 0 0 3px 1px rgba(255,0,0,.6);
+    -moz-box-shadow: 0 0 3px 1px rgba(255,0,0,.6);
+    box-shadow: 0 0 3px 1px rgba(255,0,0,.6);
+    border-color: #843534
+}
+

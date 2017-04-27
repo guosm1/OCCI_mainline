@@ -34,6 +34,10 @@
         "cancel": "取消",
         "create": {
             "knowledge": "创建知识"
+        },
+        "validation": {
+            "id": "请输入知识内容唯一标识。",
+            "type": "请输入或选择问题所属组件名称（只能有一个）。"
         }
     },
     "edit": {
@@ -41,6 +45,9 @@
         "cancel": "取消",
         "edit": {
           "knowledge": "编辑知识"
+        },
+        "validation": {
+          "type": "请输入或选择问题所属组件名称（只能有一个）。"
         }
     },
     "delete": {
