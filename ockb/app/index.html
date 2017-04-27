@@ -116,7 +116,7 @@
 
                     <form name="createKBForm" novalidate class="form-horizontal">
                       <div class="form-group">
-                        <label class="col-sm-2 control-label">{{ 'detail.label.id' | translate }}</label>
+                        <label class="col-sm-2 control-label">{{ 'detail.label.id' | translate }} *</label>
                         <div ng-class="{ 'ockb-has-error': createKBForm.createContentId.$dirty && createKBForm.createContentId.$invalid || createKBForm.createContentId.$pristine}" class="col-sm-9">
                           <input name="createContentId" ng-model="createContentId" class="form-control" required></input>
                           <span style="color:red" ng-show="createKBForm.createContentId.$dirty && createKBForm.createContentId.$invalid">
@@ -125,7 +125,7 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="col-sm-2 control-label">{{ 'detail.label.type' | translate }}</label>
+                        <label class="col-sm-2 control-label">{{ 'detail.label.type' | translate }} *</label>
                         <div class="col-sm-9">
                           <tags-input
                               ng-model="tags"
