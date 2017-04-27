@@ -42,3 +42,10 @@ def ockb(role=None):
          group=params.ockb_user_group,
          mode=0644
          )
+
+    File(format("{ockb_bin}/server"),
+         content=Template(format("server.j2")),
+         owner=params.ockb_user,
+         group=params.ockb_user_group,
+         mode=0755
+         )
