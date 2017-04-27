@@ -9,6 +9,8 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
     $scope.editSuccessfully = false;
     $scope.editSuccessfullyMessages = "";
 
+    $scope.isEditContentTypeEmpty = false;
+
     // set the type and id into the details scope
     $scope.type = $routeParams.type;
     $scope.id = $routeParams.id;
@@ -37,6 +39,18 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
     // only permit the one tag
     $scope.forceOneTag = function(tags) {
         return (tags.length === 0);
+    }
+
+
+    // remove tag will invoke this function
+    $scope.removedTag = function() {
+        $scope.isEditContentTypeEmpty = true;
+    }
+
+
+    // add tag will invoke this function
+    $scope.addedTag = function() {
+        $scope.isEditContentTypeEmpty = false;
     }
 
 

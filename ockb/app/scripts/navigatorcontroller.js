@@ -24,7 +24,6 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     };
 
 
-
     vm.get_type = function() {
 
         var defered = $q.defer();
@@ -59,15 +58,15 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     };
 
 
-     vm.sortById = function(a, b){
-        if(a.id < b.id){
-              return -1;
-          }else if(a.id > b.id){
-              return 1;
-          }else{
-              return 0;
-          }
-     }
+    vm.sortByDescription = function(a, b){
+        if(a.description < b.description){
+            return -1;
+        }else if(a.description > b.description){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 
 
     vm.initialTree = function(){
@@ -85,8 +84,9 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                         get_id_promise.then(function(data) {
 
                                  var item = {
-                                    "id": key,
-                                    "type": key,
+//                                    "id": key,
+//                                    "type": key,
+                                    // here key is the type name, set to description for show
                                     "description": key,
                                     "children": []
                                  };
@@ -100,7 +100,7 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                                  });
                                  $scope.dataForTheTree.push(item);
                                  // sort the nav tree types
-                                 $scope.dataForTheTree.sort(vm.sortById);
+                                 $scope.dataForTheTree.sort(vm.sortByDescription);
 
                              }, function(data) {
                                  vm.header_titles = [];
