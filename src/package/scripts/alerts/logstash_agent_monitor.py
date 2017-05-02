@@ -12,13 +12,15 @@ RESULT_CODE_CRITICAL = 'CRITICAL'
 RESULT_CODE_UNKNOWN = 'UNKNOWN'
 
 LOGSTASH_PID_DIR = '{{logstash-env/logstash_pid_dir}}'
+OCKB_PORT = '{{ockb-site/server.port}}'
+OCKB_HOST = '{{ockb-site/ockb.host}}'
 
 def get_tokens():
     """
     Returns a tuple of tokens in the format {{site/property}} that will be used
     to build the dictionary passed into execute
     """
-    return (LOGSTASH_PID_DIR,)
+    return (LOGSTASH_PID_DIR,OCKB_PORT,OCKB_HOST,)
 
 
 def is_logstash_process_live(pid_file):
@@ -56,6 +58,13 @@ def execute(configurations={}, parameters={}, host_name=None):
     else:
         return (RESULT_CODE_UNKNOWN, ['The logstash_pid_dir is a required parameter.'])
 
+
+    if (set([OCKB_PORT]).issubset(configurations)) and (set([OCKB_HOST]).issubset(configurations)):
+        the_ockb_port = configurations[OCKB_PORT]
+        the_ockb_host = configurations[OCKB_HOST]
+    else:
+        return (RESULT_CODE_UNKNOWN, ['The ockb_port and the_ockb_host are the required parameters.'])
+
     if host_name is None:
         host_name = socket.getfqdn()
 
@@ -63,7 +72,10 @@ def execute(configurations={}, parameters={}, host_name=None):
 
     alert_state = RESULT_CODE_OK if logstash_process_running else RESULT_CODE_CRITICAL
 
-    alert_label = 'Logstasgh Agent is running on {0}' if logstash_process_running else 'Logstasgh Agent is NOT running on {0}'
-    alert_label = alert_label.format(host_name)
+    ockb_url = 'http://' + the_ockb_host + ':' + the_ockb_port + '/#!/detail/OCCI/ALM-100001'
+    ockb_msg = 'Please go to link <a target="_blank" href="' + ockb_url + '">Start Logstasgh Agent</a> to dismiss the alert.'
+    alert_label = 'Logstasgh Agent is running on {0}' if logstash_process_running else 'Logstasgh Agent is NOT running on {0} {1}'
+    alert_label = alert_label.format(host_name, ockb_msg)
+
 
     return (alert_state, [alert_label])
