@@ -9,15 +9,27 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
     $scope.addContentResponse = false;
     $scope.addContent = {};
 
-    $scope.createContentId = "";
     $scope.isCreateContentTypeEmpty = false;
-
-    $scope.reasons = [{key: 0, value: ""}];
-    $scope.steps = [{key: 0, value: ""}];
 
     $scope.tags = [];
 
     $scope.addLevels = CONFIG.levels;
+
+
+    // init items for reasons and steps
+    $scope.items = [];
+
+
+    $scope.addItem = function() {
+      var newItem = {"reason": "", "steps": [{key: 0, value: ""}]};
+      $scope.items.push(newItem);
+    };
+
+
+    $scope.removeItem = function($index) {
+      $scope.items.splice($index, 1);
+    };
+
 
     $scope.loadTags = function(query) {
       return $scope.tagsSearch;
@@ -42,30 +54,25 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
     }
 
 
-    $scope.incReason = function($index) {
-          $scope.reasons.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
+    $scope.incStep = function(itemIndex, item) {
+        item.steps.splice(itemIndex + 1, 0, {key: new Date().getTime(), value: ""});
     }
 
 
-    $scope.rmvReason = function($index) {
-          $scope.reasons.splice($index, 1);
-    }
-
-
-    $scope.incStep = function($index) {
-          $scope.steps.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
-    }
-
-
-    $scope.rmvStep = function($index) {
-          $scope.steps.splice($index, 1);
+    $scope.rmvStep = function(itemIndex, item) {
+        item.steps.splice(itemIndex, 1);
     }
 
 
     $scope.formatListToEs = function(array) {
           var formatted = [];
           angular.forEach(array, function(obj, key) {
-              formatted.push(obj.value);
+              var steps = [];
+              angular.forEach(obj.steps, function(val) {
+                steps.push(val.value);
+              })
+              var reason_steps = {"reason": obj.reason, "steps": steps};
+              formatted.push(reason_steps);
           });
           return formatted;
     }
@@ -77,7 +84,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
         var type = $scope.tags[0].text;
         var defered = $q.defer();
 
-        var url = '/api/details/' + type + '/' + $scope.createContentId;
+        var url = '/api/details/' + type + '/' + $scope.addContent.id;
         $http({
                 url: url,
                 method: 'GET'
@@ -92,22 +99,20 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
 
 
     $scope.create = function() {
-        var possible_cause = $scope.formatListToEs($scope.reasons);
-        var processing_step = $scope.formatListToEs($scope.steps);
+        var reasons_steps = $scope.formatListToEs($scope.items);
         // because we only allow 1 component in this field, only get the first index 0 data
         var type = $scope.tags[0].text;
 
         var defered = $q.defer();
 
         var addBody = {
-                            "id": $scope.createContentId,
+                            "id": $scope.addContent.id,
                             "type": type,
                             "description": $scope.addContent.description,
                             "explanation": $scope.addContent.explanation,
                             "level": $scope.addContent.level,
                             "impact": $scope.addContent.impact,
-                            "possible_cause": possible_cause,
-                            "processing_step": processing_step,
+                            "reasons_steps": reasons_steps,
                             "reference": $scope.addContent.reference,
                        };
          $http({
@@ -145,7 +150,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
                                   // because we only allow 1 component in this field, only get the first index 0 data
                                   var type = $scope.tags[0].text;
                                   $timeout(function () {
-                                      $location.path('detail/' + type + '/' + $scope.createContentId);
+                                      $location.path('detail/' + type + '/' + $scope.addContent.id);
                                       // refresh the whole page after the create to load the nav tree again
                                       window.location.reload();
                                   }, 500);

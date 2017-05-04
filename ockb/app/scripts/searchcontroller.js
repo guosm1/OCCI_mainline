@@ -31,17 +31,17 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
                 case "impact":
                     str = str + $translate.instant('detail.label.impact') + ": " + value.join("") + "<br/>";
                     break;
-                case "possible_cause":
+                case "reasons_steps.reason":
                     str = str + $translate.instant('detail.label.reason') + ": ";
                     angular.forEach(value, function(v, k) {
-                        str = str + (k + 1) + "." + v;
+                        str = str + (k + 1) + "." + v + "&nbsp;";
                     });
                     str = str + "<br/>";
                     break;
-                case "processing_step":
+                case "reasons_steps.steps":
                     str = str + $translate.instant('detail.label.steps') + ": ";
                     angular.forEach(value, function(v, k) {
-                        str = str + (k + 1) + "." + v;
+                        str = str + (k + 1) + "." + v + "&nbsp;";
                     });
                     str = str + "<br/>";
                     break;

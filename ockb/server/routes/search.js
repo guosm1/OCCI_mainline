@@ -16,12 +16,12 @@ var callEsSearch = function(query){
                   '"size": 10000,' +
                   '"query": {' +
                       '"query_string": {' +
-                          '"fields" : ["id", "type", "description", "explanation", "level", "impact", "possible_cause", "processing_step", "reference"],' +
+                            '"fields" : ["id", "type", "description", "explanation", "level", "impact", "reasons_steps.reason", "reasons_steps.steps", "reference"],' +
                           '"query": "' + query + '",' +
                           '"default_operator": "or"' +
                           '}' +
                       '},' +
-                      '"highlight": {"fields": {"id": {}, "type": {}, "description": {}, "explanation": {}, "level": {}, "impact": {}, "possible_cause": {}, "processing_step": {}, "reference": {}}}' +
+                      '"highlight": {"fields": {"id": {}, "type": {}, "description": {}, "explanation": {}, "level": {}, "impact": {}, "reasons_steps.reason": {}, "reasons_steps.steps": {}, "reference": {}}}' +
                 '}';
 
   var options = {
