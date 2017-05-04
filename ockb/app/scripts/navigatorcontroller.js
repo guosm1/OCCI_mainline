@@ -163,4 +163,11 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
     }, 500);
 
 
+    $scope.removeDup = function(a, b){
+      if(a === b){
+        return true;
+      }
+      return false;
+    }
+
 });
