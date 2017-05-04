@@ -72,7 +72,8 @@
                                  node-children="children"
                                  on-selection="showSelected(node)"
                                  selected-node="node">
-                        <span id="{{node.type}}_{{node.id}}">{{node.id}} {{node.description}}</span>
+                        <span ng-if="removeDup(node.type, node.id)" id="{{node.type}}_{{node.id}}">{{node.id}}</span>
+                        <span ng-if="!removeDup(node.type, node.id)" id="{{node.type}}_{{node.id}}">{{node.id}} {{node.description}}</span>
                     </treecontrol>
                     </div>
                 </div>
