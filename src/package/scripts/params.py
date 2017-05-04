@@ -126,7 +126,7 @@ kinana_index = config['configurations']['kibana-site']['kibana.index']
 
 ockb_elastic_host = config['configurations']['ockb-site']['elasticsearch.host']
 ockb_elastic_port = config['configurations']['ockb-site']['elasticsearch.port']
-ockb_port = config['configurations']['ockb-site']['server.port']
+ockb_port = config['configurations']['ockb-site']['ockb.server.port']
 
 if 'clusterHostInfo' in config and 'ockb_server_hosts' in config['clusterHostInfo']:
     ockb_server_hosts = config['clusterHostInfo']['ockb_server_hosts']

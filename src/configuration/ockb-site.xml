@@ -40,8 +40,8 @@
         <description>Knowledge Base hostname or IP for alert direction.</description>
     </property>
     <property>
-        <name>server.port</name>
-        <value>3000</value>
+        <name>ockb.server.port</name>
+        <value>3009</value>
         <description>Knowledge Base Server Port</description>
         <value-attributes>
             <type>int</type>
