@@ -26,10 +26,26 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
 
     $scope.editLevels = CONFIG.levels;
 
+    // init items for reasons and steps
+    $scope.items = [];
+
+
+    $scope.addItem = function() {
+      var newItem = {"reason": "", "steps": [{key: 0, value: ""}]};
+      $scope.items.push(newItem);
+    };
+
+
+    $scope.removeItem = function($index) {
+      $scope.items.splice($index, 1);
+    };
+
+
     $scope.editTagsSearch = [];
     angular.forEach($scope.editTypesSelectOption, function(value, key) {
         $scope.editTagsSearch.push({ "text": value });
     });
+
 
     $scope.loadTags = function(query) {
       return $scope.editTagsSearch;
@@ -54,25 +70,14 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
     }
 
 
-    $scope.incReason = function($index) {
-          $scope.reasons.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
+    $scope.incStep = function(itemIndex, item) {
+        item.steps.splice(itemIndex + 1, 0, {key: new Date().getTime(), value: ""});
     }
 
 
-    $scope.rmvReason = function($index) {
-          $scope.reasons.splice($index, 1);
+    $scope.rmvStep = function(itemIndex, item) {
+        item.steps.splice(itemIndex, 1);
     }
-
-
-    $scope.incStep = function($index) {
-          $scope.steps.splice($index + 1, 0, {key: new Date().getTime(), value: ""});
-    }
-
-
-    $scope.rmvStep = function($index) {
-          $scope.steps.splice($index, 1);
-    }
-
 
 
     $scope.list = function() {
@@ -92,11 +97,11 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
 
 
     $scope.setEditContent = function(data) {
-             $scope.reasons = [];
-             $scope.steps = [];
              $scope.editContent = {};
-             $scope.editContent.id = data.data._source.id;
+             $scope.editTags = [];
+             $scope.items = [];
 
+             $scope.editContent.id = data.data._source.id;
              $scope.editContent.description = data.data._source.description;
              $scope.editContent.explanation = data.data._source.explanation;
              $scope.editContent.level = data.data._source.level;
@@ -105,13 +110,13 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
 
              $scope.editTags.push({ "text": data.data._source.type });
 
-             angular.forEach(data.data._source.possible_cause, function(value) {
-                  $scope.reasons.push({key: new Date().getTime(), value: value});
-             });
-
-
-             angular.forEach(data.data._source.processing_step, function(value) {
-                  $scope.steps.push({key: new Date().getTime(), value: value});
+             angular.forEach(data.data._source.reasons_steps, function(value) {
+                  var steps = [];
+                  angular.forEach(value.steps, function(val, key) {
+                       steps.push({key: key, value: val});
+                  });
+                  var existItem = {"reason": value.reason, "steps": steps};
+                  $scope.items.push(existItem);
              });
     }
 
@@ -129,15 +134,19 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
     $scope.formatListToEs = function(array) {
           var formatted = [];
           angular.forEach(array, function(obj, key) {
-              formatted.push(obj.value);
+              var steps = [];
+              angular.forEach(obj.steps, function(val) {
+                steps.push(val.value);
+              })
+              var reason_steps = {"reason": obj.reason, "steps": steps};
+              formatted.push(reason_steps);
           });
           return formatted;
     }
 
 
     $scope.update = function() {
-        var possible_cause = $scope.formatListToEs($scope.reasons);
-        var processing_step = $scope.formatListToEs($scope.steps);
+        var reasons_steps = $scope.formatListToEs($scope.items);
         // because we only allow 1 component in this field, only get the first index 0 data
         var type = $scope.editTags[0].text;
 
@@ -150,8 +159,7 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
                             "explanation": $scope.editContent.explanation,
                             "level": $scope.editContent.level,
                             "impact": $scope.editContent.impact,
-                            "possible_cause": possible_cause,
-                            "processing_step": processing_step,
+                            "reasons_steps": reasons_steps,
                             "reference": $scope.editContent.reference,
                        };
          $http({
@@ -171,6 +179,7 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
        var promise = $scope.list();
        promise.then(function(data) {
                 $scope.detail = data.data;
+
                 $scope.setEditContent(data);
             }, function(data) {
                 $scope.detail = {error: 'can not find'};

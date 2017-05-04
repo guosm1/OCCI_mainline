@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('ockbApp', ['datatables', 'ngRoute', 'pascalprecht.translate', 'treeControl', 'ngTagsInput', 'ockbConfigApp']);
+var app = angular.module('ockbApp', ['datatables', 'ngRoute', 'pascalprecht.translate', 'treeControl', 'ngTagsInput', 'ui.bootstrap', 'ockbConfigApp']);
 app.config(function($routeProvider, CONFIG) {
 
      $routeProvider

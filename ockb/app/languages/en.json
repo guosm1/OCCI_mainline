@@ -26,12 +26,15 @@
             "impact": "Impact",
             "reason": "Reason",
             "steps": "Steps",
-            "reference": "Reference"
+            "reference": "Reference",
+            "information": "Basic information",
+            "reasonsAndSteps": "Reasons and dismiss steps"
         }
     },
     "add": {
         "save": "Save",
         "cancel": "Cancel",
+        "addItem": "Add reasons and steps",
         "create": {
             "knowledge": "Create Knowledge"
         },
@@ -43,6 +46,7 @@
     "edit": {
         "save": "Save",
         "cancel": "Cancel",
+        "addItem": "Add reasons and steps",
         "edit": {
           "knowledge": "Edit Knowledge"
         },

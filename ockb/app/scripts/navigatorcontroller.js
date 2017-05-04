@@ -84,8 +84,10 @@ angular.module('ockbApp').controller('navigatorcontroller', function ($scope, $h
                         get_id_promise.then(function(data) {
 
                                  var item = {
-//                                    "id": key,
-//                                    "type": key,
+                                    // id and key here are for the use find the tree control
+                                    // we set the html element ID as type_id
+                                    "id": key,
+                                    "type": key,
                                     // here key is the type name, set to description for show
                                     "description": key,
                                     "children": []
