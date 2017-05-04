@@ -2,8 +2,9 @@
   "name": "default",
   "description": "default quick links configuration",
   "configuration": {
-    "protocol": {
-      "type":"HTTP_ONLY"
+    "protocol":
+    {
+      "type":"http"
     },
 
     "links": [
@@ -17,8 +18,8 @@
           "http_property": "server.port",
           "http_default_port": "5601",
           "https_property": "server.port",
-          "https_default_port": "5601",
-          "regex": "\\w*:(\\d+)",
+          "https_default_port": "5611",
+          "regex": "",
           "site": "kibana-site"
         }
       },
@@ -29,11 +30,11 @@
         "component_name": "OCKB_SERVER",
         "url":"%@://%@:%@/",
         "port": {
-          "http_property": "server.port",
-          "http_default_port": "3000",
-          "https_property": "server.port",
-          "https_default_port": "3000",
-          "regex": "\\w*:(\\d+)",
+          "http_property": "ockb.server.port",
+          "http_default_port": "3009",
+          "https_property": "ockb.server.port",
+          "https_default_port": "3019",
+          "regex": "",
           "site": "ockb-site"
         }
       }
