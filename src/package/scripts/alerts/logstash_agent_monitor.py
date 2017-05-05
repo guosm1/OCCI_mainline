@@ -12,7 +12,7 @@ RESULT_CODE_CRITICAL = 'CRITICAL'
 RESULT_CODE_UNKNOWN = 'UNKNOWN'
 
 LOGSTASH_PID_DIR = '{{logstash-env/logstash_pid_dir}}'
-OCKB_PORT = '{{ockb-site/server.port}}'
+OCKB_PORT = '{{ockb-site/ockb.server.port}}'
 OCKB_HOST = '{{ockb-site/ockb.host}}'
 
 def get_tokens():
@@ -73,7 +73,7 @@ def execute(configurations={}, parameters={}, host_name=None):
     alert_state = RESULT_CODE_OK if logstash_process_running else RESULT_CODE_CRITICAL
 
     ockb_url = 'http://' + the_ockb_host + ':' + the_ockb_port + '/#!/detail/OCCI/ALM-100001'
-    ockb_msg = 'Please go to link <a target="_blank" href="' + ockb_url + '">Start Logstasgh Agent</a> to dismiss the alert.'
+    ockb_msg = 'Please go to link <a target="_blank" href="' + ockb_url + '">Knowledge Base ALM-100001</a> to dismiss the alert.'
     alert_label = 'Logstasgh Agent is running on {0}' if logstash_process_running else 'Logstasgh Agent is NOT running on {0} {1}'
     alert_label = alert_label.format(host_name, ockb_msg)
 
