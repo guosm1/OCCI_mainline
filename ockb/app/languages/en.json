@@ -1,6 +1,7 @@
 {
     "index": {
-        "brand": "OCDP Knowledge Base",
+        "brand": "Orange Cloud Knowledge Center",
+        "title": "Orange Cloud Knowledge Center",
         "warning": "WARNING：",
         "warningContent": "There is not knowledge in the knowledge base, please create or import the knowledge.",
         "search": {
