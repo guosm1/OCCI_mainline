@@ -88,7 +88,7 @@ def execute(configurations={}, parameters={}, host_name=None):
     
     # Determine the status based on errors.    
     if len(err_apps) == 0 and len(warn_apps) == 0:
-        return (RESULT_STATE_OK, ["\n".join([])])
+        return (RESULT_STATE_OK, ['There is NOT long running MapReduce Job.'])
     elif len(err_apps) > 0:
         # Report errors
         return (RESULT_STATE_CRITICAL, ["\n".join(msgs)])
