@@ -134,7 +134,11 @@ function searchcontroller($scope, $http, $routeParams, $location, $window, $q, $
                                 "sLast": "&gt;&gt;",
                                 "sNext": "&gt;",
                                 "sPrevious": "&lt;"
-                            }
+                            },
+                            "sEmptyTable": $translate.instant('index.table.sEmptyTable'),
+                            "sInfo": $translate.instant('index.table.sInfo'),
+                            "sInfoEmpty": $translate.instant('index.table.sInfoEmpty'),
+                            "sLoadingRecords": $translate.instant('index.table.sLoadingRecords')
                         });
 
     $scope.dtColumns = [

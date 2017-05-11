@@ -40,7 +40,8 @@
     "express": "~4.15.2",
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "elasticdump": "^2.1.0"
   },
   "engines": {
     "node": ">=0.10.0"

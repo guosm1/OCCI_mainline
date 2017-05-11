@@ -1,0 +1,7 @@
+# Here should be the ockb node installed path, if the ockb installed path changed
+# should change the OCKBNODEJS, now, we set the hard path here, because now the
+# ockb is not support install to other path
+OCKBNODEJS=/opt/ockb/node-v6.9.5-linux-x64
+OCKBELASTICDUMP=/opt/ockb/node_modules/elasticdump
+PATH=$OCKBNODEJS/bin:$OCKBELASTICDUMP/bin:$PATH
+export PATH
