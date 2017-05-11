@@ -21,7 +21,7 @@
 -->
 
 <configuration>
-  <!-- logstash.conf -->
+  <!-- logstash_ha.conf -->
   <property>
     <name>content</name>
     <description>This is highly available logstash configuration file to define input, filter and output.</description>
@@ -70,7 +70,7 @@ output {
 # pipeline of yarn apps
 input {
   exec {
-    command => "if [ `hostname -f` == {{rm_host}} ]; then find {{logstash_log_dir}} -name yarn.apps -size +100M -delete; python {{logstash_bin}}/yarn-apps.py >> {{logstash_log_dir}}/yarn.apps; fi"
+    command => "find {{logstash_log_dir}} -name yarn.apps -size +100M -delete; python {{logstash_bin}}/yarn-apps.py >> {{logstash_log_dir}}/yarn.apps"
     interval => 60
   }
 }
