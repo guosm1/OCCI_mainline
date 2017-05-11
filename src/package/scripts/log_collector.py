@@ -23,7 +23,7 @@ from logstash import logstash
 from kibana_server import exclude_package_flag
 import os, sys, signal, time
 
-class LogstashAgent(Script):
+class LogCollector(Script):
   def install(self, env):
     import params
     env.set_params(params)
@@ -61,4 +61,4 @@ class LogstashAgent(Script):
     check_process_status(params.logstash_pid_file)
 
 if __name__ == "__main__":
-  LogstashAgent().execute()
+  LogCollector().execute()

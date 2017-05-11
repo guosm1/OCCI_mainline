@@ -50,8 +50,13 @@ elastic_log_dir = config['configurations']['elasticsearch-site']['path.logs']
 logstash_home = "/opt/logstash"
 logstash_bin = "/opt/logstash/bin"
 logstash_conf_dir = "/etc/logstash/conf.d"
+logstash_ha_conf_dir = "etc/logstash/ha_conf.d"
 logstash_log_dir = "/var/log/logstash"
 logstash_sincedb_path = format("{logstash_log_dir}/.sincedb2")
+
+occimon_bin_dir = "/opt/occimon/bin"
+occimon_lib_dir = "/opt/occimon/lib"
+logstash_ha_zk_node = "/occimon_leader"
 
 kibana_home = "/opt/kibana"
 kibana_bin = "/opt/kibana/bin"
@@ -63,6 +68,7 @@ ockb_pid_dir = status_params.ockb_pid_dir
 ockb_pid_file = status_params.ockb_pid_file
 logstash_pid_dir = status_params.logstash_pid_dir
 logstash_pid_file = status_params.logstash_pid_file
+logstash_ha_pid_file = status_params.logstash_ha_pid_file
 elastic_pid_dir = status_params.elastic_pid_dir
 elastic_pid_file = status_params.elastic_pid_file
 kibana_pid_dir = status_params.kibana_pid_dir
@@ -110,6 +116,18 @@ else:
         rm_host = rm_hosts[0]
     else:
         rm_host = rm_hosts
+        
+zk_client_port = "2181"
+if 'zoo.cfg' in config['configurations'] and 'clientPort' in config['configurations']['zoo.cfg']:
+    zk_client_port = str(config['configurations']['zoo.cfg']['clientPort'])
+        
+zk_connect_str = ""
+if 'clusterHostInfo' in config and 'zookeeper_hosts' in config['clusterHostInfo']:
+    zk_hosts = config['clusterHostInfo']['zookeeper_hosts']
+    zk_url = []
+    for item in zk_hosts:
+        zk_url.append(item + ":" + zk_client_port)
+    zk_connect_str = ",".join(zk_url)
     
 rm_port = 8088
 if 'yarn-site' in config['configurations'] and 'yarn.resourcemanager.webapp.address' in config['configurations']['yarn-site'] and ':' in config['configurations']['yarn-site']['yarn.resourcemanager.webapp.address']:
@@ -142,6 +160,11 @@ if (('logstash-data-source' in config['configurations']) and ('content' in confi
     logstash_conf = config['configurations']['logstash-data-source']['content']
 else:
     logstash_conf = None
+    
+if (('logstash-ha-data-source' in config['configurations']) and ('content' in config['configurations']['logstash-ha-data-source'])):
+    logstash_ha_conf = config['configurations']['logstash-ha-data-source']['content']
+else:
+    logstash_ha_conf = None
 
 elastic_data_hosts = []
 if 'clusterHostInfo' in config and 'elastic_datanode_hosts' in config['clusterHostInfo']:
