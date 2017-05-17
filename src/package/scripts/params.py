@@ -50,13 +50,12 @@ elastic_log_dir = config['configurations']['elasticsearch-site']['path.logs']
 logstash_home = "/opt/logstash"
 logstash_bin = "/opt/logstash/bin"
 logstash_conf_dir = "/etc/logstash/conf.d"
-logstash_ha_conf_dir = "etc/logstash/ha_conf.d"
 logstash_log_dir = "/var/log/logstash"
 logstash_sincedb_path = format("{logstash_log_dir}/.sincedb2")
 
 occimon_bin_dir = "/opt/occimon/bin"
 occimon_lib_dir = "/opt/occimon/lib"
-logstash_ha_zk_node = "/occimon_leader"
+metric_collector_zk_node = "/occimon_leader"
 
 kibana_home = "/opt/kibana"
 kibana_bin = "/opt/kibana/bin"
@@ -67,8 +66,8 @@ kibana_log_dir = config['configurations']['kibana-site']['logging.dest']
 ockb_pid_dir = status_params.ockb_pid_dir
 ockb_pid_file = status_params.ockb_pid_file
 logstash_pid_dir = status_params.logstash_pid_dir
-logstash_pid_file = status_params.logstash_pid_file
-logstash_ha_pid_file = status_params.logstash_ha_pid_file
+log_collector_pid_file = status_params.log_collector_pid_file
+metric_collector_pid_file = status_params.metric_collector_pid_file
 elastic_pid_dir = status_params.elastic_pid_dir
 elastic_pid_file = status_params.elastic_pid_file
 kibana_pid_dir = status_params.kibana_pid_dir
@@ -156,15 +155,15 @@ else:
     else:
         ockb_host = ockb_server_hosts
 
-if (('logstash-data-source' in config['configurations']) and ('content' in config['configurations']['logstash-data-source'])):
-    logstash_conf = config['configurations']['logstash-data-source']['content']
+if (('log-data-source' in config['configurations']) and ('content' in config['configurations']['log-data-source'])):
+    logstash_log_conf = config['configurations']['log-data-source']['content']
 else:
-    logstash_conf = None
+    logstash_log_conf = None
     
-if (('logstash-ha-data-source' in config['configurations']) and ('content' in config['configurations']['logstash-ha-data-source'])):
-    logstash_ha_conf = config['configurations']['logstash-ha-data-source']['content']
+if (('metric-data-source' in config['configurations']) and ('content' in config['configurations']['metric-data-source'])):
+    logstash_metric_conf = config['configurations']['metric-data-source']['content']
 else:
-    logstash_ha_conf = None
+    logstash_metric_conf = None
 
 elastic_data_hosts = []
 if 'clusterHostInfo' in config and 'elastic_datanode_hosts' in config['clusterHostInfo']:

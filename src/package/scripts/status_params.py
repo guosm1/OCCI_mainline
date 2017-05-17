@@ -26,8 +26,8 @@ ockb_pid_dir = config['configurations']['ockb-env']['ockb_pid_dir']
 ockb_pid_file = format("{ockb_pid_dir}/ockb.pid")
 
 logstash_pid_dir = config['configurations']['logstash-env']['logstash_pid_dir']
-logstash_pid_file = format("{logstash_pid_dir}/logstash.pid")
-logstash_ha_pid_file = format("{logstash_pid_dir}/logstash_ha.pid")
+log_collector_pid_file = format("{logstash_pid_dir}/log_collector.pid")
+metric_collector_pid_file = format("{logstash_pid_dir}/metric_collector.pid")
 
 elastic_pid_dir = config['configurations']['elastic-env']['elastic_pid_dir']
 elastic_pid_file = format("{elastic_pid_dir}/elasticsearch.pid")

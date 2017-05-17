@@ -21,7 +21,7 @@ from resource_management import *
 import sys
 from copy import deepcopy
 
-def logstash_ha(role=None):
+def lcollector(role=None):
     import params
     
     directories = [params.logstash_home,
@@ -29,9 +29,7 @@ def logstash_ha(role=None):
                    params.logstash_log_dir,
                    params.logstash_conf_dir,
                    params.logstash_pid_dir,
-                   params.logstash_sincedb_path,
-                   params.occimon_bin_dir,
-                   params.occimon_lib_dir]
+                   params.logstash_sincedb_path]
                    
     Directory(directories,
               owner=params.logstash_user,
@@ -40,37 +38,16 @@ def logstash_ha(role=None):
               cd_access='a'
             )
 
-    if (params.logstash_conf != None):
-        File(format("{logstash_conf_dir}/logstash_ha.conf"),
-             content=InlineTemplate(params.logstash_ha_conf),
+    if (params.logstash_log_conf != None):
+        File(format("{logstash_conf_dir}/log_collector.conf"),
+             content=InlineTemplate(params.logstash_log_conf),
              owner=params.logstash_user,
              group=params.logstash_user_group,
              mode=0644
         )
-        
-    File(format("{logstash_log_dir}/template-disk.json"),
-         content=Template(format("template-disk.json.j2")),
-         owner=params.logstash_user,
-         group=params.logstash_user_group,
-         mode=0644
-    )
-        
-    File(format("{logstash_bin}/yarn-apps.py"),
-         content=Template(format("yarn-apps.py.j2")),
-         owner=params.logstash_user,
-         group=params.logstash_user_group,
-         mode=0644
-    )
-    
-    File(format("{logstash_log_dir}/template-running.json"),
-         content=Template(format("template-running.json.j2")),
-         owner=params.logstash_user,
-         group=params.logstash_user_group,
-         mode=0644
-    )
-    
-    File(format("{logstash_log_dir}/template-finished.json"),
-         content=Template(format("template-finished.json.j2")),
+
+    File(format("{logstash_log_dir}/template-service-log.json"),
+         content=Template(format("template-service-log.json.j2")),
          owner=params.logstash_user,
          group=params.logstash_user_group,
          mode=0644

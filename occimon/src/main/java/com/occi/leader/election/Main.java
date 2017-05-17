@@ -9,20 +9,34 @@ import org.apache.curator.framework.recipes.leader.LeaderSelectorListener;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.framework.state.ConnectionState;
+import java.util.logging.Logger;
+import java.util.logging.FileHandler;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.Level;
 
 public class Main {
-    public static String exec[];
-
     public static void main(String[] args) throws InterruptedException {
+        Logger logger = Logger.getLogger("occimonLog"); 
+        FileHandler fh;
+        
+        try {  
+            fh = new FileHandler("/var/log/occimon.log", true);  
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();  
+            fh.setFormatter(formatter);
+            logger.setLevel(Level.INFO);            
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }
+        
         if (args.length < 3) {
-            System.err
-                    .println("USAGE: Main zkConnectStr znode program [args ...]");
+            logger.severe("USAGE: Main zkConnectStr znode program [args ...]");
             System.exit(1);
         }
 
         String zookeeperConnectionString = args[0];
         String znode = args[1];
-        exec = new String[args.length - 2];
+        String exec[] = new String[args.length - 2];
         System.arraycopy(args, 2, exec, 0, exec.length);
 
         // these are reasonable arguments for the ExponentialBackoffRetry. The first
@@ -37,17 +51,22 @@ public class Main {
                 // this callback will get called when you are the leader
                 // do whatever leader work you need to and only exit
                 // this method when you want to relinquish leadership
-                System.out.println("I'm the leader now ");
+                logger.info("I'm the leader now ");
                 try {
                     System.out.println("Starting child");
                     child = Runtime.getRuntime().exec(exec);
+                    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                        public void run() {
+                            child.destroy();
+                        }
+                    }));
                     // cause this process to stop until process child is terminated
                     child.waitFor();
-                    System.out.println("Child is down, give up leadership");
+                    logger.warning("Child is down, give up leadership");
                     throw new CancelLeadershipException();
                 } catch (Exception  e) {
                     e.printStackTrace();
-                    System.out.println("Cannot start up child process, give up leadership");
+                    logger.warning("Cannot start up child process, give up leadership");
                     throw new CancelLeadershipException();
                 }
             }
@@ -58,7 +77,7 @@ public class Main {
                 if ( (newState == ConnectionState.SUSPENDED) || (newState == ConnectionState.LOST) )
                 {
                     if (child != null) {
-                        System.out.println("Lost connection with zookeeper, kill child");
+                        logger.warning("Lost connection with zookeeper, kill child");
                         child.destroy();
                     }
                     throw new CancelLeadershipException();

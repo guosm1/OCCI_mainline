@@ -21,10 +21,10 @@
 -->
 
 <configuration>
-  <!-- logstash_ha.conf -->
+  <!-- metric_collector.conf -->
   <property>
     <name>content</name>
-    <description>This is highly available logstash configuration file to define input, filter and output.</description>
+    <description>This is metric collector configuration file to define input, filter and output.</description>
     <value>
 # pipeline of disk usage
 input {

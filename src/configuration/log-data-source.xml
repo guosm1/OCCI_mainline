@@ -21,10 +21,10 @@
 -->
 
 <configuration>
-  <!-- logstash.conf -->
+  <!-- log_collector.conf -->
   <property>
     <name>content</name>
-    <description>This is logstash configuration file to define input, filter and output.</description>
+    <description>This is log collector configuration file to define input, filter and output.</description>
     <value>
 #pipeline of hdfs namenode logs
 input {
