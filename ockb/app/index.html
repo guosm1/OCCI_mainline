@@ -66,7 +66,7 @@
         <div ng-controller="navigatorcontroller as navctrl" class="container-fluid">
             <div class="row">
                 <div class="col-sm-3">
-                    <div class="tree-border">
+                    <div class="tree-border ockb-treecontrol">
                     <treecontrol class="tree-light"
                                  tree-model="dataForTheTree"
                                  options="treeOptions"
@@ -168,6 +168,14 @@
                                 <div class="col-sm-9">
                                   <select ng-model="addContent.level" class="form-control">
                                     <option ng-repeat="x in addLevels">{{ x }}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="col-sm-2 control-label">{{ 'detail.label.public' | translate }}</label>
+                                <div class="col-sm-9">
+                                  <select ng-model="addContent.public" class="form-control">
+                                    <option ng-repeat="y in addPublic">{{ y }}</option>
                                   </select>
                                 </div>
                               </div>

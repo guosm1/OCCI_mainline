@@ -68,6 +68,11 @@ treecontrol.tree-light li.tree-leaf {
   border: 0px
 }
 
+.ockb-treecontrol {
+  max-height: 768px;
+  overflow: auto;
+}
+
 .ockb-warning {
   margin-left: 20px;
 }
