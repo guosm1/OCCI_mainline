@@ -27,6 +27,7 @@
             "type": "Components",
             "description": "Description",
             "level": "Level",
+            "public": "Public Level",
             "explanation": "Explanation",
             "impact": "Impact",
             "reason": "Reason",

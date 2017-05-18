@@ -14,6 +14,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
     $scope.tags = [];
 
     $scope.addLevels = CONFIG.levels;
+    $scope.addPublic = CONFIG.public;
 
 
     // init items for reasons and steps
@@ -111,6 +112,7 @@ angular.module('ockbApp').controller('addcontroller', function ($scope, $http, $
                             "description": $scope.addContent.description,
                             "explanation": $scope.addContent.explanation,
                             "level": $scope.addContent.level,
+                            "public": $scope.addContent.public,
                             "impact": $scope.addContent.impact,
                             "reasons_steps": reasons_steps,
                             "reference": $scope.addContent.reference,

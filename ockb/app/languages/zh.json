@@ -27,6 +27,7 @@
             "type": "问题所属组件",
             "description": "问题描述",
             "level": "问题级别",
+            "public": "公开级别",
             "explanation": "问题解释",
             "impact": "对系统影响",
             "reason": "可能原因",
