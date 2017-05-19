@@ -53,6 +53,10 @@ logstash_conf_dir = "/etc/logstash/conf.d"
 logstash_log_dir = "/var/log/logstash"
 logstash_sincedb_path = format("{logstash_log_dir}/.sincedb2")
 
+occimon_bin_dir = "/opt/occimon/bin"
+occimon_lib_dir = "/opt/occimon/lib"
+metric_collector_zk_node = "/occimon_leader"
+
 kibana_home = "/opt/kibana"
 kibana_bin = "/opt/kibana/bin"
 kibana_conf_dir = "/opt/kibana/config"
@@ -62,7 +66,8 @@ kibana_log_dir = config['configurations']['kibana-site']['logging.dest']
 ockb_pid_dir = status_params.ockb_pid_dir
 ockb_pid_file = status_params.ockb_pid_file
 logstash_pid_dir = status_params.logstash_pid_dir
-logstash_pid_file = status_params.logstash_pid_file
+log_collector_pid_file = status_params.log_collector_pid_file
+metric_collector_pid_file = status_params.metric_collector_pid_file
 elastic_pid_dir = status_params.elastic_pid_dir
 elastic_pid_file = status_params.elastic_pid_file
 kibana_pid_dir = status_params.kibana_pid_dir
@@ -110,6 +115,18 @@ else:
         rm_host = rm_hosts[0]
     else:
         rm_host = rm_hosts
+        
+zk_client_port = "2181"
+if 'zoo.cfg' in config['configurations'] and 'clientPort' in config['configurations']['zoo.cfg']:
+    zk_client_port = str(config['configurations']['zoo.cfg']['clientPort'])
+        
+zk_connect_str = ""
+if 'clusterHostInfo' in config and 'zookeeper_hosts' in config['clusterHostInfo']:
+    zk_hosts = config['clusterHostInfo']['zookeeper_hosts']
+    zk_url = []
+    for item in zk_hosts:
+        zk_url.append(item + ":" + zk_client_port)
+    zk_connect_str = ",".join(zk_url)
     
 rm_port = 8088
 if 'yarn-site' in config['configurations'] and 'yarn.resourcemanager.webapp.address' in config['configurations']['yarn-site'] and ':' in config['configurations']['yarn-site']['yarn.resourcemanager.webapp.address']:
@@ -138,10 +155,15 @@ else:
     else:
         ockb_host = ockb_server_hosts
 
-if (('logstash-data-source' in config['configurations']) and ('content' in config['configurations']['logstash-data-source'])):
-    logstash_conf = config['configurations']['logstash-data-source']['content']
+if (('log-data-source' in config['configurations']) and ('content' in config['configurations']['log-data-source'])):
+    logstash_log_conf = config['configurations']['log-data-source']['content']
 else:
-    logstash_conf = None
+    logstash_log_conf = None
+    
+if (('metric-data-source' in config['configurations']) and ('content' in config['configurations']['metric-data-source'])):
+    logstash_metric_conf = config['configurations']['metric-data-source']['content']
+else:
+    logstash_metric_conf = None
 
 elastic_data_hosts = []
 if 'clusterHostInfo' in config and 'elastic_datanode_hosts' in config['clusterHostInfo']:

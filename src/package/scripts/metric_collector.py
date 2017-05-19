@@ -19,11 +19,11 @@ limitations under the License.
 """
 
 from resource_management import *
-from logstash import logstash
+from mcollector import mcollector
 from kibana_server import exclude_package_flag
 import os, sys, signal, time
 
-class LogstashAgent(Script):
+class MetricCollector(Script):
   def install(self, env):
     import params
     env.set_params(params)
@@ -37,28 +37,28 @@ class LogstashAgent(Script):
     import params
     env.set_params(params)
     # install logstash plugin
-    logstash()
+    mcollector()
 
   def start(self, env, upgrade_type=None):
     import params
     env.set_params(params)
     self.configure(env)
-    start_cmd = format("{logstash_bin}/logstash agent -f {logstash_conf_dir}/logstash.conf --log  {logstash_log_dir}/logstash.log & echo $! > {logstash_pid_file} &")
+    start_cmd = format("{occimon_bin_dir}/occimon {zk_connect_str} {metric_collector_zk_node} {logstash_bin}/logstash -f {logstash_conf_dir}/metric_collector.conf --log {logstash_log_dir}/metric_collector.log & echo $! > {metric_collector_pid_file} &")
     time.sleep(60)
     Execute(start_cmd) 
     
   def stop(self, env, upgrade_type=None):
     import params
     env.set_params(params)
-    if os.path.isfile(params.logstash_pid_file):
-      pid = int(file(params.logstash_pid_file,'r').readlines()[0])
+    if os.path.isfile(params.metric_collector_pid_file):
+      pid = int(file(params.metric_collector_pid_file,'r').readlines()[0])
       os.kill(pid, signal.SIGKILL)
-      File(params.logstash_pid_file, action = "delete")
+      File(params.metric_collector_pid_file, action = "delete")
 
   def status(self, env):
     import params
     env.set_params(params)
-    check_process_status(params.logstash_pid_file)
+    check_process_status(params.metric_collector_pid_file)
 
 if __name__ == "__main__":
-  LogstashAgent().execute()
+  MetricCollector().execute()

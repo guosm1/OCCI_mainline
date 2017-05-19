@@ -15,13 +15,25 @@
       </quickLinksConfigurations>
       <components>
         <component>
-          <name>LOGSTASH_AGENT</name>
-          <displayName>Logstash Agent</displayName>
+          <name>LOG_COLLECTOR</name>
+          <displayName>Log collector</displayName>
           <category>SLAVE</category>
           <cardinality>ALL</cardinality>
           <versionAdvertised>true</versionAdvertised>
           <commandScript>
-            <script>scripts/logstash_agent.py</script>
+            <script>scripts/log_collector.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>600</timeout>
+          </commandScript>
+        </component>
+        <component>
+          <name>METRIC_COLLECTOR</name>
+          <displayName>Metric collector</displayName>
+          <category>SLAVE</category>
+          <cardinality>1+</cardinality>
+          <versionAdvertised>true</versionAdvertised>
+          <commandScript>
+            <script>scripts/metric_collector.py</script>
             <scriptType>PYTHON</scriptType>
             <timeout>600</timeout>
           </commandScript>
@@ -71,6 +83,9 @@
               <name>logstash</name>
             </package>
             <package>
+              <name>occimon</name>
+            </package>
+            <package>
               <name>elasticsearch</name>
             </package>
             <package>
@@ -89,7 +104,8 @@
       </commandScript>
       <configuration-dependencies>
         <config-type>elasticsearch-site</config-type>
-        <config-type>logstash-data-source</config-type>
+        <config-type>log-data-source</config-type>
+        <config-type>metric-data-source</config-type>
         <config-type>kibana-site</config-type>
         <config-type>ockb-site</config-type>
         <config-type>elk-env</config-type>
