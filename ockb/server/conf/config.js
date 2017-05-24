@@ -3,7 +3,7 @@
 module.exports = {
   'elaticsearch': {
         'protocol': 'http',
-        'hostname': '103.235.243.213',//"localhost",
+        'hostname': 'localhost',
         'port': '9200',
         'index': 'occikb'
     }
