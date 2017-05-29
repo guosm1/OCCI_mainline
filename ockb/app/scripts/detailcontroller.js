@@ -25,6 +25,7 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
     $scope.editTags = [];
 
     $scope.editLevels = CONFIG.levels;
+    $scope.editPublic = CONFIG.public;
 
     // init items for reasons and steps
     $scope.items = [];
@@ -105,6 +106,7 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
              $scope.editContent.description = data.data._source.description;
              $scope.editContent.explanation = data.data._source.explanation;
              $scope.editContent.level = data.data._source.level;
+             $scope.editContent.public = data.data._source.public;
              $scope.editContent.impact = data.data._source.impact;
              $scope.editContent.reference = data.data._source.reference;
 
@@ -158,6 +160,7 @@ function detailcontroller($scope, $http, $routeParams, $q, docTypesFactory, navD
                             "description": $scope.editContent.description,
                             "explanation": $scope.editContent.explanation,
                             "level": $scope.editContent.level,
+                            "public": $scope.editContent.public,
                             "impact": $scope.editContent.impact,
                             "reasons_steps": reasons_steps,
                             "reference": $scope.editContent.reference,
