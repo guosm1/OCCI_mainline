@@ -54,11 +54,21 @@ class MetricCollector(Script):
       pid = int(file(params.metric_collector_pid_file,'r').readlines()[0])
       os.kill(pid, signal.SIGKILL)
       File(params.metric_collector_pid_file, action = "delete")
+      cmd = format("pgrep -f {logstash_conf_dir}/metric_collector.conf | xargs kill -9")
+      os.system(cmd)
 
   def status(self, env):
     import params
     env.set_params(params)
-    check_process_status(params.metric_collector_pid_file)
+    try:
+        check_process_status(params.metric_collector_pid_file)
+    except:
+        if params.metric_collector_pid_file and os.path.isfile(params.metric_collector_pid_file):
+            with open(params.metric_collector_pid_file, "r") as f:
+                pid = int(file(params.metric_collector_pid_file,'r').readlines()[0])
+                cmd = format("pgrep -f {logstash_conf_dir}/metric_collector.conf | xargs kill -9")
+                os.system(cmd)
+        raise
 
 if __name__ == "__main__":
   MetricCollector().execute()
