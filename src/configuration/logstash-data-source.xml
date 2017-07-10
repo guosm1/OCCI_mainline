@@ -29,7 +29,7 @@
 # pipeline of yarn apps
 input {
   exec {
-    command => "if [ `hostname -f` == {{rm_host}} ]; then find {{logstash_log_dir}} -name yarn.apps -size +100M -delete; python {{logstash_bin}}/yarn-apps.py >> {{logstash_log_dir}}/yarn.apps; fi"
+    command => "FQDN=$(hostname -f |tr [a-z] [A-Z]); RMHOST=$(echo {{rmhost}} | tr [a-z] [A-Z]); if [ $FQDN = $RMHOST ]; then find {{logstash_log_dir}} -name yarn.apps -size +100M -delete; python {{logstash_bin}}/yarn-apps.py >> {{logstash_log_dir}}/yarn.apps; fi"
     interval => 60
   }
 }
