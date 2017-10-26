@@ -29,7 +29,7 @@
 # pipeline of disk usage
 input {
   exec {
-    command => "su {{hdfs_user}} -c &apos;hdfs dfs -df&apos;"
+    command => "su {{hdfs_user}} -c &apos;hdfs dfs -df&apos; ; if [ $? -ne 0 ]; then pid=$(ps -p $$ -o ppid=); kill -9 $pid; fi"
     interval => 3600
     type => "disk"
   }
@@ -70,7 +70,7 @@ output {
 # pipeline of yarn apps
 input {
   exec {
-    command => "find {{logstash_log_dir}} -name yarn.apps -size +100M -delete; python {{logstash_bin}}/yarn-apps.py >> {{logstash_log_dir}}/yarn.apps"
+    command => "find {{logstash_log_dir}} -name yarn.apps -size +100M -delete; python {{logstash_bin}}/yarn-apps.py >> {{logstash_log_dir}}/yarn.apps; if [ $? -ne 0 ]; then pid=$(ps -p $$ -o ppid=); kill -9 $pid; fi"
     interval => 60
   }
 }
