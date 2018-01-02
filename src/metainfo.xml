@@ -63,6 +63,18 @@
           </commandScript>
         </component>
         <component>
+          <name>GRAFANA_SERVER</name>
+          <displayName>Grafana Server</displayName>
+          <category>MASTER</category>
+          <cardinality>1</cardinality>
+          <versionAdvertised>true</versionAdvertised>
+          <commandScript>
+            <script>scripts/grafana_server.py</script>
+            <scriptType>PYTHON</scriptType>
+            <timeout>600</timeout>
+          </commandScript>
+        </component>
+        <component>
           <name>OCKB_SERVER</name>
           <displayName>Knowledge Base Server</displayName>
           <category>MASTER</category>
@@ -97,6 +109,9 @@
             <package>
               <name>python-requests</name>
             </package>
+            <package>
+              <name>grafana</name>
+            </package>
           </packages>
         </osSpecific>
       </osSpecifics>
@@ -110,8 +125,9 @@
         <config-type>log-data-source</config-type>
         <config-type>metric-data-source</config-type>
         <config-type>kibana-site</config-type>
-        <config-type>ockb-site</config-type>
+        <config-type>ockb-site</config-type> 
         <config-type>elk-env</config-type>
+        <config-type>grafana-site</config-type>
       </configuration-dependencies>
     </service>
   </services>

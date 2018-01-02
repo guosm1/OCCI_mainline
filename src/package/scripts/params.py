@@ -33,6 +33,8 @@ elastic_user = config['configurations']['elastic-env']['elastic_user']
 elastic_user_group = config['configurations']['elastic-env']['elastic_user_group']
 kibana_user = config['configurations']['kibana-env']['kibana_user']
 kibana_user_group = config['configurations']['kibana-env']['kibana_user_group']
+grafana_user =config['configurations']['grafana-env']['grafana_user']
+grafana_user_group = config['configurations']['grafana-env']['grafana_user_group']
 
 ockb_home = "/opt/ockb"
 ockb_bin = "/opt/ockb/bin"
@@ -62,6 +64,13 @@ kibana_bin = "/opt/kibana/bin"
 kibana_conf_dir = "/opt/kibana/config"
 kibana_log_dir = config['configurations']['kibana-site']['logging.dest']
 
+grafana_home = "/usr/share/grafana"
+grafana_bin = "/usr/share/grafana/bin"
+grafana_conf_dir = "/etc/grafana"
+grafana_plugins = "/var/lib/grafana/plugins"
+grafana_log_dir = config['configurations']['grafana-site']['logging.dest']
+grafana_data_dir = config['configurations']['grafana-site']['path.data']
+http_code = config['configurations']['grafana-site']['http.code']
 
 ockb_pid_dir = status_params.ockb_pid_dir
 ockb_pid_file = status_params.ockb_pid_file
@@ -72,6 +81,8 @@ elastic_pid_dir = status_params.elastic_pid_dir
 elastic_pid_file = status_params.elastic_pid_file
 kibana_pid_dir = status_params.kibana_pid_dir
 kibana_pid_file = status_params.kibana_pid_file
+grafana_pid_dir = status_params.grafana_pid_dir
+grafana_pid_file = status_params.grafana_pid_file
 
 hdfs_log_dir_prefix = ""
 hdfs_user = ""
@@ -141,6 +152,8 @@ elastic_port = config['configurations']['elasticsearch-site']['http.port']
 kibana_port = config['configurations']['kibana-site']['server.port']
 kinana_index = config['configurations']['kibana-site']['kibana.index']
 
+grafana_port =config['configurations']['grafana-site']['grafana.server.port']
+
 ockb_elastic_host = config['configurations']['ockb-site']['elasticsearch.host']
 ockb_elastic_port = config['configurations']['ockb-site']['elasticsearch.port']
 ockb_port = config['configurations']['ockb-site']['ockb.server.port']
@@ -185,3 +198,13 @@ else:
         kibana_host = kibana_server_hosts[0]
     else:
         kibana_host = kibana_server_hosts
+
+if 'clusterHostInfo' in config and 'grafana_server_hosts' in config['clusterHostInfo']:
+    grafana_server_hosts = config['clusterHostInfo']['grafana_server_hosts']
+    grafana_host = grafana_server_hosts[0]
+else:
+    grafana_server_hosts = default("/clusterHostInfo/grafana_server_hosts", None)
+    if type(grafana_server_hosts) is list:
+        grafana_host = grafana_server_hosts[0]
+    else:
+        grafana_host = grafana_server_hosts

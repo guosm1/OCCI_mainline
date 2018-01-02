@@ -9,18 +9,34 @@
 
     "links": [
       {
-        "name": "OCCI",
-        "label": "OCCI UI",
+        "name": "GRAFANA",
+        "label": "GRAFANA UI",
         "requires_user_name": "false",
-        "component_name": "KIBANA_SERVER",
-        "url":"%@://%@:%@/app/kibana#/dashboard/cluster",
+        "component_name": "GRAFANA_SERVER",
+        "url":"%@://%@:%@/dashboard/db/ji-qun-zi-yuan-bao-biao?refresh=1h&orgId=1",
         "port": {
-          "http_property": "server.port",
-          "http_default_port": "5601",
-          "https_property": "server.port",
-          "https_default_port": "5611",
+          "http_property": "grafana.server.port",
+          "http_default_port": "3007",
+          "https_property": "",
+          "https_default_port": "",
           "regex": "",
-          "site": "kibana-site"
+          "site": "grafana-site"
+        }
+      },
+      {
+        "name": "logsearch_ui",
+        "label": "Log Search UI",
+        "component_name": "LOGSEARCH_SERVER",
+        "url": "%@://%@:%@",
+        "requires_user_name": "false",
+        "attributes": ["authenticated", "sso"],
+        "port": {
+          "http_property": "logsearch_ui_port",
+          "http_default_port": "8888",
+          "https_property": "logsearch_ui_port",
+          "https_default_port": "8888",
+          "regex": "^(\\d+)$",
+          "site": "logsearch-env"
         }
       },
       {
@@ -40,4 +56,4 @@
       }
     ]
   }
-}
+} 

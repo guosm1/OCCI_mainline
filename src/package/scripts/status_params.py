@@ -34,3 +34,6 @@ elastic_pid_file = format("{elastic_pid_dir}/elasticsearch.pid")
 
 kibana_pid_dir = config['configurations']['kibana-env']['kibana_pid_dir']
 kibana_pid_file = format("{kibana_pid_dir}/kibana.pid")
+
+grafana_pid_dir = config['configurations']['grafana-env']['grafana_pid_dir']
+grafana_pid_file = format("{grafana_pid_dir}/grafana.pid")

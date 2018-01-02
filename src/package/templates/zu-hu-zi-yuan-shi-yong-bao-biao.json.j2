@@ -1,0 +1,1630 @@
+
+{
+    "dashboard": {
+        "__requires": [
+            {
+                "id": "elasticsearch",
+                "name": "Elasticsearch",
+                "type": "datasource",
+                "version": "3.0.0"
+            },
+            {
+                "id": "grafana",
+                "name": "Grafana",
+                "type": "grafana",
+                "version": "4.3.1"
+            },
+            {
+                "id": "grafana-piechart-panel",
+                "name": "Pie Chart",
+                "type": "panel",
+                "version": "1.1.4"
+            },
+            {
+                "id": "graph",
+                "name": "Graph",
+                "type": "panel",
+                "version": ""
+            }
+        ],
+        "annotations": {
+            "list": []
+        },
+        "description": "",
+        "editable": true,
+        "gnetId": null,
+        "graphTooltip": 0,
+        "hideControls": false,
+        "id": null,
+        "links": [
+            {
+                "asDropdown": true,
+                "icon": "external link",
+                "tags": [],
+                "title": "切换报表",
+                "type": "dashboards"
+            }
+        ],
+        "refresh": "1m",
+        "rows": [
+            {
+                "collapse": false,
+                "height": 250,
+                "panels": [
+                    {
+                        "aliasColors": {
+                            "FREE": "#7EB26D",
+                            "MAPREDUCE": "#1F78C1",
+                            "SPARK": "#E5AC0E",
+                            "mapreduce": "#1F78C1",
+                            "others": "#3F6833",
+                            "spark": "#E0752D",
+                            "tez": "#BF1B00"
+                        },
+                        "bars": false,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-running",
+                        "fill": 1,
+                        "hideTimeOverride": false,
+                        "id": 1,
+                        "interval": ">60s",
+                        "legend": {
+                            "alignAsTable": false,
+                            "avg": false,
+                            "current": false,
+                            "hideEmpty": false,
+                            "hideZero": false,
+                            "max": false,
+                            "min": false,
+                            "rightSide": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": true,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 1,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 6,
+                        "stack": true,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "alias": "",
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "id": "4",
+                                        "query": "*",
+                                        "settings": {
+                                            "filters": [
+                                                {
+                                                    "query": "mapreduce"
+                                                },
+                                                {
+                                                    "query": "spark"
+                                                },
+                                                {
+                                                    "query": "tez"
+                                                },
+                                                {
+                                                    "query": "others"
+                                                }
+                                            ]
+                                        },
+                                        "type": "filters"
+                                    },
+                                    {
+                                        "field": "logdate",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "hide": false,
+                                "metrics": [
+                                    {
+                                        "field": "vCores",
+                                        "id": "3",
+                                        "inlineScript": null,
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "sum"
+                                    }
+                                ],
+                                "query": "queue: $queue",
+                                "refId": "A",
+                                "timeField": "logdate"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "CPU Utilization by Workload Type",
+                        "tooltip": {
+                            "shared": true,
+                            "sort": 2,
+                            "value_type": "individual"
+                        },
+                        "transparent": false,
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "time",
+                            "name": null,
+                            "show": true,
+                            "values": []
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": "",
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    },
+                    {
+                        "aliasColors": {
+                            "mapreduce": "#1F78C1",
+                            "others": "#3F6833",
+                            "spark": "#E0752D",
+                            "tez": "#890F02"
+                        },
+                        "bars": false,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-running",
+                        "fill": 1,
+                        "id": 9,
+                        "interval": ">60s",
+                        "legend": {
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": true,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 6,
+                        "stack": true,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "id": "3",
+                                        "query": "*",
+                                        "settings": {
+                                            "filters": [
+                                                {
+                                                    "query": "mapreduce"
+                                                },
+                                                {
+                                                    "query": "spark"
+                                                },
+                                                {
+                                                    "query": "tez"
+                                                },
+                                                {
+                                                    "query": "others"
+                                                }
+                                            ]
+                                        },
+                                        "type": "filters"
+                                    },
+                                    {
+                                        "field": "logdate",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "memory",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "sum"
+                                    }
+                                ],
+                                "query": "queue: $queue",
+                                "refId": "A",
+                                "timeField": "logdate"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Memory Utilization by Workload Type",
+                        "tooltip": {
+                            "shared": true,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "time",
+                            "name": null,
+                            "show": true,
+                            "values": []
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    }
+                ],
+                "repeat": null,
+                "repeatIteration": null,
+                "repeatRowId": null,
+                "showTitle": true,
+                "title": "$queue CPU Memory Utilization",
+                "titleSize": "h6"
+            },
+            {
+                "collapse": false,
+                "height": 284,
+                "panels": [
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 2,
+                        "interval": ">60s",
+                        "legend": {
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "rightSide": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 4,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "appId",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "1",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "vcoreSeconds",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "max"
+                                    }
+                                ],
+                                "query": "appState: FINISHED AND appType: MAPREDUCE AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Top-10 CPU Consuming Finished MapReduce Jobs",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "max"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    },
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 5,
+                        "interval": ">60s",
+                        "legend": {
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 4,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "appId",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "1",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "memorySeconds",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "max"
+                                    }
+                                ],
+                                "query": "appState: FINISHED AND appType: MAPREDUCE AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Top-10 Memory Consuming Finished Mapreduce Jobs",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "max"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    },
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 6,
+                        "interval": ">60s",
+                        "legend": {
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 4,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "appId",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "1",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "elapsedTime",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "max"
+                                    }
+                                ],
+                                "query": "appState: FINISHED AND appType: MAPREDUCE AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Top-10 Time Consuming Finished Mapreduce Jobs",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "max"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    }
+                ],
+                "repeat": null,
+                "repeatIteration": null,
+                "repeatRowId": null,
+                "showTitle": true,
+                "title": "$queue Mapreduce Finished Job Top 10",
+                "titleSize": "h6"
+            },
+            {
+                "collapse": false,
+                "height": 250,
+                "panels": [
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 11,
+                        "interval": ">60s",
+                        "legend": {
+                            "alignAsTable": false,
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "rightSide": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 4,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "appId",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "1",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "vcoreSeconds",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "max"
+                                    }
+                                ],
+                                "query": "appType:SPARK AND appState:FINISHED AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Top-10 CPU Consuming Finished Spark Jobs",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "total"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    },
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 12,
+                        "interval": ">60s",
+                        "legend": {
+                            "alignAsTable": false,
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "rightSide": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 4,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "appId",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "1",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "memorySeconds",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "max"
+                                    }
+                                ],
+                                "query": "appType:SPARK AND appState:FINISHED AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Top-10 Memory Consuming Finished Spark Jobs",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "total"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    },
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 13,
+                        "interval": ">60s",
+                        "legend": {
+                            "alignAsTable": false,
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "rightSide": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 4,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "appId",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "1",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "elapsedTime",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "max"
+                                    }
+                                ],
+                                "query": "appType:SPARK AND appState:FINISHED AND (NOT (appName:org.apache.spark.sql.hive.thriftserver.HiveThriftServer2)) AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Top-10 Time Consuming Running Spark Jobs",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "total"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    }
+                ],
+                "repeat": null,
+                "repeatIteration": null,
+                "repeatRowId": null,
+                "showTitle": true,
+                "title": "$queue Spark Finished Job Top 10",
+                "titleSize": "h6"
+            },
+            {
+                "collapse": false,
+                "height": 250,
+                "panels": [
+                    {
+                        "aliasColors": {},
+                        "cacheTimeout": null,
+                        "combine": {
+                            "label": "Others",
+                            "threshold": ""
+                        },
+                        "datasource": "mylogstash-yarn-apps",
+                        "fontSize": "80%",
+                        "format": "short",
+                        "hideTimeOverride": false,
+                        "id": 3,
+                        "interval": ">60s",
+                        "legend": {
+                            "percentage": true,
+                            "show": true,
+                            "values": true
+                        },
+                        "legendType": "Under graph",
+                        "links": [],
+                        "maxDataPoints": 3,
+                        "minSpan": null,
+                        "nullPointMode": "connected",
+                        "pieType": "pie",
+                        "repeat": null,
+                        "span": 6,
+                        "strokeWidth": "1",
+                        "targets": [
+                            {
+                                "alias": "",
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "id": "4",
+                                        "query": "*",
+                                        "settings": {
+                                            "filters": [
+                                                {
+                                                    "query": "elapsedTime: [0 TO 29]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [30 TO 60]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [61 TO 300]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [301 TO 900]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [901 TO 1800]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [1801 TO 3600]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [3601 TO 10800]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [10801 TO 2592000]"
+                                                }
+                                            ]
+                                        },
+                                        "type": "filters"
+                                    },
+                                    {
+                                        "fake": true,
+                                        "field": "finishedTime",
+                                        "id": "3",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "select field",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "count"
+                                    }
+                                ],
+                                "query": "appState: FINISHED AND appType: MAPREDUCE AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "title": "Time Distribution of Mapreduce Jobs",
+                        "transparent": false,
+                        "type": "grafana-piechart-panel",
+                        "valueName": "total"
+                    },
+                    {
+                        "aliasColors": {},
+                        "cacheTimeout": null,
+                        "combine": {
+                            "label": "Others",
+                            "threshold": ""
+                        },
+                        "datasource": "mylogstash-yarn-apps",
+                        "fontSize": "80%",
+                        "format": "short",
+                        "hideTimeOverride": false,
+                        "id": 14,
+                        "interval": ">60s",
+                        "legend": {
+                            "percentage": true,
+                            "show": true,
+                            "values": true
+                        },
+                        "legendType": "Under graph",
+                        "links": [],
+                        "maxDataPoints": 3,
+                        "minSpan": null,
+                        "nullPointMode": "connected",
+                        "pieType": "pie",
+                        "span": 6,
+                        "strokeWidth": "1",
+                        "targets": [
+                            {
+                                "alias": "",
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "id": "4",
+                                        "query": "*",
+                                        "settings": {
+                                            "filters": [
+                                                {
+                                                    "query": "elapsedTime: [0 TO 29]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [30 TO 60]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [61 TO 300]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [301 TO 900]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [901 TO 1800]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [1801 TO 3600]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [3601 TO 10800]"
+                                                },
+                                                {
+                                                    "query": "elapsedTime: [10801 TO 2592000]"
+                                                }
+                                            ]
+                                        },
+                                        "type": "filters"
+                                    },
+                                    {
+                                        "fake": true,
+                                        "field": "finishedTime",
+                                        "id": "3",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "select field",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "count"
+                                    }
+                                ],
+                                "query": "appState: FINISHED AND appType: SPARK AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "title": "Time Distribution of Spark Jobs",
+                        "transparent": false,
+                        "type": "grafana-piechart-panel",
+                        "valueName": "total"
+                    }
+                ],
+                "repeat": null,
+                "repeatIteration": null,
+                "repeatRowId": null,
+                "showTitle": true,
+                "title": "$queue Jobs Time Distribution",
+                "titleSize": "h6"
+            },
+            {
+                "collapse": false,
+                "height": 250,
+                "panels": [
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 7,
+                        "interval": ">60s",
+                        "legend": {
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 6,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "appId",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "1",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "elapsedTime",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "max"
+                                    }
+                                ],
+                                "query": "appType:MAPREDUCE  AND appState:RUNNING AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Top-10 Time Consuming Running Mapreduce Jobs",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "max"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    },
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 15,
+                        "interval": ">60s",
+                        "legend": {
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 6,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "appId",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "1",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "elapsedTime",
+                                        "id": "1",
+                                        "meta": {},
+                                        "settings": {},
+                                        "type": "max"
+                                    }
+                                ],
+                                "query": "appType:SPARK AND appState:RUNNING AND (NOT (appName:org.apache.spark.sql.hive.thriftserver.HiveThriftServer2)) AND queue: $queue",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Top-10 Time Consuming Running Spark Jobs",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "max"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    }
+                ],
+                "repeat": null,
+                "repeatIteration": null,
+                "repeatRowId": null,
+                "showTitle": true,
+                "title": "$queue Running Jobs",
+                "titleSize": "h6"
+            },
+            {
+                "collapse": false,
+                "height": 250,
+                "panels": [
+                    {
+                        "aliasColors": {},
+                        "bars": true,
+                        "dashLength": 10,
+                        "dashes": false,
+                        "datasource": "mylogstash-yarn-apps",
+                        "fill": 1,
+                        "id": 8,
+                        "interval": ">60s",
+                        "legend": {
+                            "avg": false,
+                            "current": false,
+                            "max": false,
+                            "min": false,
+                            "show": true,
+                            "total": false,
+                            "values": false
+                        },
+                        "lines": false,
+                        "linewidth": 1,
+                        "links": [],
+                        "nullPointMode": "null",
+                        "percentage": false,
+                        "pointradius": 5,
+                        "points": false,
+                        "renderer": "flot",
+                        "seriesOverrides": [],
+                        "spaceLength": 10,
+                        "span": 12,
+                        "stack": false,
+                        "steppedLine": false,
+                        "targets": [
+                            {
+                                "bucketAggs": [
+                                    {
+                                        "fake": true,
+                                        "field": "finalStatus",
+                                        "id": "3",
+                                        "settings": {
+                                            "min_doc_count": 1,
+                                            "order": "desc",
+                                            "orderBy": "_count",
+                                            "size": "10"
+                                        },
+                                        "type": "terms"
+                                    },
+                                    {
+                                        "field": "finishedTime",
+                                        "id": "2",
+                                        "settings": {
+                                            "interval": "auto",
+                                            "min_doc_count": 0,
+                                            "trimEdges": 0
+                                        },
+                                        "type": "date_histogram"
+                                    }
+                                ],
+                                "dsType": "elasticsearch",
+                                "metrics": [
+                                    {
+                                        "field": "select field",
+                                        "id": "1",
+                                        "type": "count"
+                                    }
+                                ],
+                                "query": "queue: $queue AND (appState: FINISHED OR FAILED OR KILLED)",
+                                "refId": "A",
+                                "timeField": "finishedTime"
+                            }
+                        ],
+                        "thresholds": [],
+                        "timeFrom": null,
+                        "timeShift": null,
+                        "title": "Jobs Statistics",
+                        "tooltip": {
+                            "shared": false,
+                            "sort": 0,
+                            "value_type": "individual"
+                        },
+                        "type": "graph",
+                        "xaxis": {
+                            "buckets": null,
+                            "mode": "series",
+                            "name": null,
+                            "show": false,
+                            "values": [
+                                "total"
+                            ]
+                        },
+                        "yaxes": [
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            },
+                            {
+                                "format": "short",
+                                "label": null,
+                                "logBase": 1,
+                                "max": null,
+                                "min": null,
+                                "show": true
+                            }
+                        ]
+                    }
+                ],
+                "repeat": null,
+                "repeatIteration": null,
+                "repeatRowId": null,
+                "showTitle": true,
+                "title": "$queue Jobs Statistics by Queues",
+                "titleSize": "h6"
+            }
+        ],
+        "schemaVersion": 14,
+        "style": "dark",
+        "tags": [],
+        "templating": {
+            "list": [
+                {
+                    "allValue": null,
+                    "current": {},
+                    "datasource": "mylogstash-yarn-running",
+                    "hide": 0,
+                    "includeAll": false,
+                    "label": "Yarn Queue",
+                    "multi": false,
+                    "name": "queue",
+                    "options": [],
+                    "query": "{\"find\": \"terms\", \"field\": \"queue\"}",
+                    "refresh": 1,
+                    "regex": ".*\\..*",
+                    "sort": 0,
+                    "tagValuesQuery": "",
+                    "tags": [],
+                    "tagsQuery": "",
+                    "type": "query",
+                    "useTags": false
+                }
+            ]
+        },
+        "time": {
+            "from": "now-6h",
+            "to": "now"
+        },
+        "timepicker": {
+            "refresh_intervals": [
+                "5s",
+                "10s",
+                "30s",
+                "1m",
+                "5m",
+                "15m",
+                "30m",
+                "1h",
+                "2h",
+                "1d"
+            ],
+            "time_options": [
+                "5m",
+                "15m",
+                "1h",
+                "6h",
+                "12h",
+                "24h",
+                "2d",
+                "7d",
+                "30d"
+            ]
+        },
+        "timezone": "browser",
+        "title": "租户资源使用报表",
+        "version": 0
+    },
+    "overwrite": false
+}
