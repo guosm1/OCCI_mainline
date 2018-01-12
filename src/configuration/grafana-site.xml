@@ -30,11 +30,6 @@
     </value-attributes>
   </property>
   <property>
-    <name>http.code</name>
-    <value>%{http_code}</value>
-    <description>curl</description>
-  </property>
-  <property>
     <name>logging.dest</name>
     <value>/var/log/grafana</value>
     <description>If you would like to send

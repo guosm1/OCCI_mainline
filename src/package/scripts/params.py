@@ -70,7 +70,7 @@ grafana_conf_dir = "/etc/grafana"
 grafana_plugins = "/var/lib/grafana/plugins"
 grafana_log_dir = config['configurations']['grafana-site']['logging.dest']
 grafana_data_dir = config['configurations']['grafana-site']['path.data']
-http_code = config['configurations']['grafana-site']['http.code']
+http_code = "%{http_code}"
 
 ockb_pid_dir = status_params.ockb_pid_dir
 ockb_pid_file = status_params.ockb_pid_file
