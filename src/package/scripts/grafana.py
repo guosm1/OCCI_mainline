@@ -94,3 +94,10 @@ def grafana(role=None):
                           group=params.grafana_user_group,
                           mode=0755
          )
+
+    File(format("{grafana_home}/grafana-create-multi-tenancy.sh"),
+         content=Template(format("grafana-create-multi-tenancy.sh.j2")),
+         owner=params.grafana_user,
+         group=params.grafana_user_group,
+         mode=0755
+         )
