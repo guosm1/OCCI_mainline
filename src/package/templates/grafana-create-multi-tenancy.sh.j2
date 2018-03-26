@@ -3,9 +3,9 @@ curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST -
   "name":"'$1'"
 }' http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/orgs
 
-id=$(curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X GET http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/orgs/name/$1 |xargs -d ',' -n 1 echo |awk -F":" '/id/ {print $2}')
+orgid=$(curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X GET http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/orgs/name/$1 |xargs -d ',' -n 1 echo |awk -F":" '/id/ {print $2}')
 
-curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/user/using/$id
+curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/user/using/$orgid
 
 curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST --data '{
     "name": "mylogstash-yarn-running",
@@ -1656,3 +1656,22 @@ curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST -
     "overwrite": false
 }' http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/dashboards/db
 
+curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST --data '{
+    "name": "'$1'",
+    "login": "'$1'",
+    "password": "'$1'"
+}'  http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/admin/users
+
+curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST --data '{
+    "role": "Viewer",
+    "loginOrEmail": "'$1'"
+}' http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/org/users
+
+tenant=$1
+userid=$(curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X GET http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/orgs/$orgid/users |xargs -d '{' -n 1 echo |awk -F '[:,]' -v tenant=$tenant '{if($8~tenant){print $4}}')
+
+curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X DELETE http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/orgs/1/users/$userid
+
+curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/users/$userid/using/$orgid
+
+curl -H 'Accept: application/json' -H 'Content-Type: application/json' -X POST http://admin:admin@{{grafana_host}}:{{grafana_port}}/api/users/1/using/1

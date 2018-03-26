@@ -1,6 +1,6 @@
 Name:           occi 
-Version:        1.0.0.0
-Release:        2
+Version:        2.0.0.0
+Release:        1
 Vendor:         AsiaInfo, Inc.
 URL:            http://www.asiainfo.com
 Packager:       AsiaInfo, Inc.<For more information, please contact your sales representative>

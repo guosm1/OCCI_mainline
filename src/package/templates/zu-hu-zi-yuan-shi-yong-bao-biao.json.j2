@@ -1,32 +1,6 @@
 
 {
     "dashboard": {
-        "__requires": [
-            {
-                "id": "elasticsearch",
-                "name": "Elasticsearch",
-                "type": "datasource",
-                "version": "3.0.0"
-            },
-            {
-                "id": "grafana",
-                "name": "Grafana",
-                "type": "grafana",
-                "version": "4.3.1"
-            },
-            {
-                "id": "grafana-piechart-panel",
-                "name": "Pie Chart",
-                "type": "panel",
-                "version": "1.1.4"
-            },
-            {
-                "id": "graph",
-                "name": "Graph",
-                "type": "panel",
-                "version": ""
-            }
-        ],
         "annotations": {
             "list": []
         },
@@ -152,7 +126,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "CPU Utilization by Workload Type",
+                        "title": "不同作业类型的CPU利用率情况",
                         "tooltip": {
                             "shared": true,
                             "sort": 2,
@@ -276,7 +250,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Memory Utilization by Workload Type",
+                        "title": "不同作业类型的内存利用率情况",
                         "tooltip": {
                             "shared": true,
                             "sort": 0,
@@ -314,7 +288,7 @@
                 "repeatIteration": null,
                 "repeatRowId": null,
                 "showTitle": true,
-                "title": "$queue CPU Memory Utilization",
+                "title": "$queue CPU和内存利用率情况",
                 "titleSize": "h6"
             },
             {
@@ -397,7 +371,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Top-10 CPU Consuming Finished MapReduce Jobs",
+                        "title": "Top-10已完成Mapreduce作业的CPU消耗情况 ",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -507,7 +481,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Top-10 Memory Consuming Finished Mapreduce Jobs",
+                        "title": "Top-10已完成Mapreduce作业的内存消耗情况",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -617,7 +591,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Top-10 Time Consuming Finished Mapreduce Jobs",
+                        "title": "Top-10已完成Mapreduce作业的时间消耗情况",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -657,7 +631,7 @@
                 "repeatIteration": null,
                 "repeatRowId": null,
                 "showTitle": true,
-                "title": "$queue Mapreduce Finished Job Top 10",
+                "title": "$queue 最近10个已完成的Mapreduce作业情况 ",
                 "titleSize": "h6"
             },
             {
@@ -741,7 +715,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Top-10 CPU Consuming Finished Spark Jobs",
+                        "title": "Top-10已完成Spark作业的CPU消耗情况 ",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -853,7 +827,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Top-10 Memory Consuming Finished Spark Jobs",
+                        "title": "Top-10已完成Spark作业的内存消耗情况 ",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -965,7 +939,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Top-10 Time Consuming Running Spark Jobs",
+                        "title": "Top-10已完成Spark作业的时间消耗情况 ",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -1005,7 +979,7 @@
                 "repeatIteration": null,
                 "repeatRowId": null,
                 "showTitle": true,
-                "title": "$queue Spark Finished Job Top 10",
+                "title": "$queue 最近10个已完成的Spark作业情况 ",
                 "titleSize": "h6"
             },
             {
@@ -1104,7 +1078,7 @@
                                 "timeField": "finishedTime"
                             }
                         ],
-                        "title": "Time Distribution of Mapreduce Jobs",
+                        "title": "Mapreduce作业运行时间的分布情况 ",
                         "transparent": false,
                         "type": "grafana-piechart-panel",
                         "valueName": "total"
@@ -1200,7 +1174,7 @@
                                 "timeField": "finishedTime"
                             }
                         ],
-                        "title": "Time Distribution of Spark Jobs",
+                        "title": "Spark作业运行时间的分布情况",
                         "transparent": false,
                         "type": "grafana-piechart-panel",
                         "valueName": "total"
@@ -1210,7 +1184,7 @@
                 "repeatIteration": null,
                 "repeatRowId": null,
                 "showTitle": true,
-                "title": "$queue Jobs Time Distribution",
+                "title": "$queue 已完成作业运行时间的分布情况",
                 "titleSize": "h6"
             },
             {
@@ -1292,7 +1266,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Top-10 Time Consuming Running Mapreduce Jobs",
+                        "title": "Top-10正在运行的Mapreduce作业时间消耗情况",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -1402,7 +1376,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Top-10 Time Consuming Running Spark Jobs",
+                        "title": "Top-10正在运行的Spark作业时间消耗情况",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -1442,7 +1416,7 @@
                 "repeatIteration": null,
                 "repeatRowId": null,
                 "showTitle": true,
-                "title": "$queue Running Jobs",
+                "title": "$queue 正在运行的作业情况",
                 "titleSize": "h6"
             },
             {
@@ -1522,7 +1496,7 @@
                         "thresholds": [],
                         "timeFrom": null,
                         "timeShift": null,
-                        "title": "Jobs Statistics",
+                        "title": "作业统计量",
                         "tooltip": {
                             "shared": false,
                             "sort": 0,
@@ -1562,7 +1536,7 @@
                 "repeatIteration": null,
                 "repeatRowId": null,
                 "showTitle": true,
-                "title": "$queue Jobs Statistics by Queues",
+                "title": "$queue 作业统计量",
                 "titleSize": "h6"
             }
         ],
@@ -1624,7 +1598,8 @@
         },
         "timezone": "browser",
         "title": "租户资源使用报表",
-        "version": 0
+        "version": 1
     },
     "overwrite": false
 }
+

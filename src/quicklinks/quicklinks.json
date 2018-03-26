@@ -7,19 +7,17 @@
       "type":"http"
     },
 
-    "links": [
-      {
         "name": "GRAFANA",
-        "label": "GRAFANA UI",
+        "label": "Grafana UI",
         "requires_user_name": "false",
         "component_name": "GRAFANA_SERVER",
-        "url":"%@://%@:%@/dashboard/db/ji-qun-zi-yuan-bao-biao?refresh=1h&orgId=1",
+        "url":"%@://%@:%@/login",
         "port": {
           "http_property": "grafana.server.port",
           "http_default_port": "3007",
           "https_property": "",
           "https_default_port": "",
-          "regex": "",
+          "regex": "^(\\d+)$",
           "site": "grafana-site"
         }
       },
