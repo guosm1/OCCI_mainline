@@ -5,8 +5,8 @@
     <service>
       <name>OCCI</name>
       <displayName>OCCI</displayName>
-      <comment>Log Analysis with the ELK stack (Elasticsearch, Logstash, Kibana)</comment>
-      <version>0.1.0</version>
+      <comment>Log Analysis with stack (Elasticsearch, Logstash, Grafana)</comment>
+      <version>0.2.0</version>
       <quickLinksConfigurations>
         <quickLinksConfiguration>
           <fileName>quicklinks.json</fileName>
