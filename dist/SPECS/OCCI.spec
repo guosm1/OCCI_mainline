@@ -80,6 +80,10 @@ rm -rf $RPM_BUILD_DIR/%{name}-%{version}
 %{userpath}
 
 %changelog
+* Fri Oct 12 2018 Guo Si Man <guosm@asiainfo.com>
+- support multi queues in dashboard
+* Fri Dec 15 2017 Guo Si Man <guosm@asiainfo.com>
+- add grafana in OCCI2.0 
 * Tue May 09 2017  Zhao Yi Ming <zhaoym6@asiainfo.com>
 - integrate with occi knowledge base alert links
 - support OCDP4.2

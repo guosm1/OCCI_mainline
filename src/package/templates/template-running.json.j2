@@ -1,13 +1,19 @@
 {% raw %}
 {
-  "template": "mylogstash-yarn-running",
-  "mappings": {
-    "yarn.apps": {
-      "_ttl": {
-        "enabled": true,
-        "default": "7d"
-      }
+    "template": "mylogstash-yarn-running",
+    "mappings": {
+        "yarn.apps": {
+            "_ttl": {
+                "enabled": true,
+                "default": "7d"
+            },
+            "properties": {
+                "queue": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                }
+            }
+        }
     }
-  }
 }
 {% endraw %}
